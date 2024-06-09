@@ -976,7 +976,7 @@ const Game = () => {
             }
         };
 
-        // handleFullscreen();
+        handleFullscreen();
 
         let documentObj = document
         documentObj.documentElement.style.zoom = '50%';
