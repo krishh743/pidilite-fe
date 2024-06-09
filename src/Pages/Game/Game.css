@@ -1,0 +1,389 @@
+.gameMain {
+    width: 100%;
+    height: 100vh;
+}
+
+.productImage {
+    max-width: 100%;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 22px;
+    align-items: center;
+
+}
+
+.popupCloseIcon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 84px;
+    height: 84px;
+
+}
+.trainerBackgroundContainer{
+    flex-grow: 1;
+    height: 100vh;
+    position: relative;
+}
+
+.trainerBgrndImage{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.leaderBoardPopupContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboardPlayerCard{
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 48px;
+    border-bottom: 1px solid #E3E3E3;
+    gap: 48px;
+}
+
+.leaderboardPlayerCard p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userProfileBodyImg {
+    width: 75%;
+    height: 75%;
+}
+
+.logo {
+    width: 57.66px;
+    height: 29.12px;
+}
+
+.playersLobby {
+    display: flex;
+    gap: 48px;
+    padding-top: 48px;
+    justify-content: center;
+}
+
+.playerLobbyDiv {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 24px;
+}
+
+.profileSVGContainer {
+    width: 100%;
+}
+
+.currentPlayerBoardSectionProfile {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerCoin {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.phoneNumberInput {
+    display: flex;
+    width: 90px !important;
+}
+
+.nav span {
+    font-size: 24px;
+    color: #2342A0;
+}
+
+.ham {
+    width: 21px;
+    height: 17px;
+}
+
+.gameBanner img {
+    width: 100%;
+    object-fit: cover;
+    height: 225px;
+}
+
+.gameBoardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -58px;
+}
+
+.playerCard {
+    width: 284px;
+    height: 543px;
+    background-color: white;
+    border-radius: 34px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.diceCardInnerContainer {
+    width: 170px;
+    height: 170px;
+    margin-top: 24px;
+    background-color: #e8e3e3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerCard span {
+    color: #F69970;
+    font-size: 28px;
+    position: relative;
+}
+
+.snlTableBlock {
+    color: transparent;
+    position: absolute;
+    display: flex;
+    left: 0;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.snlCoin {
+    width: 50px;
+    height: 50px;
+    background-color: #F69970;
+    border-radius: 50%;
+    border: 2px solid white;
+    /* box-shadow: 0px 30px 20px -20px rgba(0.5, 0.5, 0.5, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45); */
+    -webkit-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+}
+
+.gameBoard {
+    position: relative;
+    background-color: #B2D4EF;
+    width: 1294px;
+    height: 789px;
+    border-radius: 29px;
+    z-index: 10;
+    overflow: hidden;
+}
+
+
+.snlTable {
+    display: table;
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+    z-index: 99999999999 !important;
+    table-layout: fixed;
+    padding: 100px;
+    padding-left: 145px;
+}
+.snlTable tbody{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.snlTable tbody tr{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.snlTable tbody tr th{
+    width: 70px;
+    flex-grow: 1;
+    height: 75px;
+    position: relative;
+}
+
+.gameBoardImg {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.boardUserProfileSVGContainer {
+    left: 0;
+right: 0;
+margin: auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* box-shadow: 0px 30px 20px -20px rgba(0.5, 0.5, 0.5, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45); */
+    -webkit-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+}
+
+
+.boardUserProfileSVGContainerForLeaderboard {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* box-shadow: 0px 30px 20px -20px rgba(0.5, 0.5, 0.5, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45); */
+    -webkit-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999999999;
+}
+
+
+.boardUserProfileSVGContainer svg {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.playerCardInner {
+    background-color: white;
+    width: 175px;
+    padding-top: 48px;
+    border-radius: 19px;
+    /* margin-left: 38px; */
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+
+.diceCardInner {
+    background-color: white;
+
+    border-radius: 19px;
+}
+
+.diceCard {
+    width: 284px;
+    height: 543px;
+    background-color: white;
+    border-radius: 34px;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+
+}
+
+.diceCard span {
+    font-size: 24px;
+    color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: #F69970;;
+}
+
+
+
+.playerHeader {
+    color: #F69970;
+    font-size: 28px;
+}
+
+.currentPlayerName {
+    color: #636363 !important;
+    font-size: 30px !important;
+    height: 40px;
+}
+
+.gameBoardbuttons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 1294px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 14px;
+    z-index: 10 !important;
+}
+
+.exitBtn {
+    font-size: 20px;
+    padding: 16px 64px;
+    background-color: #E3E3E3;
+    border: 1px solid #D1D0D0;
+    color: #959494;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.rightBtns {
+    display: flex;
+    gap: 22px;
+}
+
+.startBtn {
+    font-size: 20px;
+    padding: 16px 64px;
+    background-color: #6DFFC9;
+    border: 1px solid #D1D0D0;
+    color: #959494;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.pauseBtn {
+    font-size: 20px;
+    padding: 16px 64px;
+    background-color: #FDD990;
+    border: 1px solid #D1D0D0;
+    color: #959494;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.endBtn {
+    font-size: 20px;
+    padding: 16px 64px;
+    background-color: #FFACAC;
+    border: 1px solid #D1D0D0;
+    color: #959494;
+    border-radius: 10px;
+    cursor: pointer;
+}

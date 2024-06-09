@@ -1,0 +1,224 @@
+.trainerSetupMain {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.trainerSetupDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.trainerSetupDetailsContainerCard {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    border: 1px solid #DEDCDC;
+}
+
+.trainerListTableTopDiv {
+    padding: 10px 10px;
+    text-align: left;
+    border-bottom: 1px solid #DEDCDC;
+}
+
+.trainerListTableTopDiv h2 {
+    font-size: 14px;
+}
+
+.trainerSetupDetailsContainerCardBody {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 14px;
+
+}
+
+.trainerGameDetailsRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trainerGameDetailFieldName {
+    font-size: 14px;
+}
+
+.listAndDetailsContainerColumn {
+    flex-direction: column !important;
+    width: 500px;
+    max-width: 500px;
+    align-items: flex-end;
+}
+
+.trainerSetupListContainer {
+    width: 500px;
+}
+
+.trainerSetupListContainer table {
+    width: 100%;
+}
+
+.trainerGameDetailFieldValue {
+    border: 1px solid #DEDCDC;
+    padding: 5px 10px;
+    width: 240px;
+    text-align: left;
+}
+
+.trainerSetupDetailsContainerCardBtn {
+    width: 200px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px 0px;
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #DEDCDC;
+    cursor: pointer;
+}
+
+.DateNTimeContainerHidden {
+    display: none !important;
+}
+
+.openedWindow{
+    color: red;
+    cursor: pointer;
+}
+.gameUrlFieldContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.trainerSetupDetailsContainerCardBtnHidden {
+    display: none !important;
+}
+
+.disabled{
+    cursor: not-allowed !important;
+}
+
+.gamesListContainer{
+    display: flex;
+    width: 100%;
+}
+
+.previewGameMain {
+    display: flex;
+    width: 100%;
+}
+
+.DateNTimeContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.previewGameRightContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 24px;
+
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.participantsAndRankings {
+    display: flex;
+    gap: 24px;
+}
+
+.participantsContainer {
+    width: 300px;
+}
+
+.participantsContainer table{
+    width: 100%;
+}
+
+
+.rankingsContainer {
+    flex-grow: 1;
+}
+
+.rankingsContainer table{
+    width: 100%;
+}
+
+.boardContainer {
+padding-bottom: 24px;
+}
+
+.boardContainerTop {
+    padding: 10px 10px;
+    border-bottom: 1px solid #DEDCDC;
+    text-align: left;
+}
+
+.boardContainer{
+   border : 1px solid #DEDCDC;
+}
+
+
+
+.boardContainerTop h2 {
+    font-size: 14px;
+}
+
+.boardCard{
+    padding-top: 24px;
+}
+.boardImg{
+    max-width: 500px;
+}
+.hidden {
+    display: none !important;
+}
+
+.fullScreenBtn {
+    width: 200px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px 0px;
+    font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #DEDCDC;
+    cursor: pointer;
+    margin-top: 24px !important;
+}
+
+
+/* // ongoing page */
+
+
+.paginationControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .paginationControls button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .paginationControls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .paginationControls span {
+    margin: 0 10px;
+  }
+  

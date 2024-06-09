@@ -1,0 +1,518 @@
+.setupMain {
+    background-color: #F5F5F5;
+    width: 100%;
+    position: relative;
+}
+
+.companyLogos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.openedWindow{
+    color: red;
+}
+
+.adminListTable {
+    width: 100%;
+    max-width: 686.325px;
+    margin-bottom: 0px !important;
+}
+
+.adminGamesListMain{
+    width: 100%;
+}
+
+.irm {
+    width: 99px;
+    height: 48px;
+}
+
+.listTableTopDiv {
+    padding: 10px 10px;
+    border-top: 1px solid #DEDCDC;
+    border-left: 1px solid #DEDCDC;
+    border-right: 1px solid #DEDCDC;
+}
+
+.listTableTopDiv h2 {
+    font-size: 14px;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 22px;
+    align-items: center;
+    border-bottom: 1px solid #DEDCDC;
+    background-color: white;
+}
+
+.searchIcon {
+    width: 15px;
+    height: 15px;
+}
+
+.filterIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.listTableTopDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.searchAndFilterIcons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.setupPageContent {
+    height: 100vh;
+    display: flex;
+    background-color: white;
+
+}
+
+.setupSideBar {
+    width: 160px;
+    flex-shrink: 0;
+    padding-top: 50px;
+
+    display: flex;
+    padding-left: 14px;
+    gap: 20px;
+    flex-direction: column;
+
+    border-right: 1px solid #DEDCDC;
+    background-color: white;
+}
+
+.trainingGamesHeader {
+    color: #959494;
+    text-align: left;
+    padding-left: 24px;
+    margin-top: 24px;
+}
+
+.activeSidebarLink {
+    color: blue !important;
+}
+
+.setupSideBar a {
+    text-decoration: none;
+    color: #959494;
+    font-size: 14px;
+    text-align: left;
+}
+
+.setupPanel {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.logo {
+    width: 57.66px;
+    height: 29.12px;
+}
+
+.nav span {
+    font-size: 24px;
+    color: #2342A0;
+}
+
+.ham {
+    width: 21px;
+    height: 17px;
+}
+
+.listAndDetailsContainer {
+    display: flex;
+    gap: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+
+.listContainer {
+    width: 50%;
+    max-width: 686.325px;
+}
+
+.detailsContainer {
+    width: 50%;
+}
+
+.openEye {
+    width: 18px;
+    height: 18px;
+}
+
+.listTableHeader {
+    outline: 1px solid #DEDCDC;
+}
+
+
+.addGameBtn {
+    width: 100%;
+    position: relative;
+    background-color: transparent;
+    border: 1px solid #DEDCDC;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+.listTableHeader th {
+    font-size: 14px;
+    padding: 10px 10px;
+}
+
+.viewColumn {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+.listTableBody {
+    outline: 1px solid #DEDCDC;
+}
+
+.listTableBody tr {
+    padding: 5px 0px;
+}
+
+.listTableBody tr td {
+    font-size: 14px;
+    padding: 10px 0px;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.basicDetailsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.rightContainers {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.basicDetailsHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    outline: 1px solid #DEDCDC;
+    border-top: 1px solid #DEDCDC;
+}
+
+.basicDetailsHeaderBtns {
+    display: flex;
+    gap: 6px;
+}
+
+.basicDetailsHeaderBtns button {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+}
+
+.basicDetailsHeaderPreviewBtn {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: red;
+}
+
+.LiveAndArchiveBtns button {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+}
+
+.panelBtns {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 24px;
+}
+
+.basicDetailsPanel {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px;
+    border-left: 1px solid #DEDCDC;
+    border-right: 1px solid #DEDCDC;
+    border-bottom: 1px solid #DEDCDC;
+    gap: 15px;
+}
+
+.IDAndGameTypeContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.IDContainer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.IDContainer span {
+    font-size: 14px;
+}
+
+.IDContainer input {
+    border: 1px solid #DEDCDC;
+    padding: 5px;
+    height: 29px;
+}
+
+.GameTypeContainer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.GameTypeContainer span {
+    font-size: 14px;
+}
+
+.GameTypeContainer input {
+    border: 1px solid #DEDCDC;
+    padding: 5px;
+    height: 29px;
+}
+
+.VariationNameContainer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.VariationNameContainer span {
+    font-size: 14px;
+}
+
+.VariationNameContainer input {
+    border-bottom: 1px solid #DEDCDC;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 5px;
+    height: 29px;
+}
+
+.SiteBannerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AdditionalDetailsRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AdditionalDetailsRow span {
+    text-align: left;
+}
+
+.MobileBannerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.SiteBannerContainer span {
+    color: #FF0000;
+    text-align: left;
+}
+
+.BackgroundBannerContainer span {
+    color: #959494;
+    text-align: left;
+}
+
+.MobileBannerContainer span {
+    color: #FF0000;
+}
+
+.SiteBannerContainerBtns {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.adminArchiveContainerMain{
+    width: 100%;
+}
+
+.MobileBannerBtns {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.ListDetailsAndPreviewContainers{
+    display: flex;
+}
+.uploader__file {
+    display: none !important;
+}
+
+.adminOngoingGamesBody{
+    display: flex   ;
+}
+.adminGamesListContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.uploader__placeholder {
+    min-height: 0 !important;
+    border: 1px solid #D1D0D0;
+}
+
+
+/* delete img btn */
+.uploader__btn_wrapper {
+    display: none !important;
+}
+
+.gametTypeSelect {
+    border: 1px solid #DEDCDC;
+    padding: 5px;
+    height: 40.6px;
+    width: 174px;
+}
+
+.uploadBtn {
+    width: 156px;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F7F7;
+    color: #000000;
+    font-size: 14px;
+    border: 1px solid #000000;
+}
+
+.PreviewAndDeleteBtns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.previewBtn {
+    width: 156px;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F7F7;
+    color: #959494;
+    font-size: 14px;
+    border: 1px solid #D1D0D0;
+    cursor: not-allowed;
+}
+
+.previewBtnActive {
+    border: 1px solid #000000;
+    color: #000000;
+    cursor: pointer !important;
+}
+
+.deleteBtn {
+    width: 156px;
+    height: 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F7F7;
+    color: #959494;
+    font-size: 14px;
+    border: 1px solid #D1D0D0;
+}
+
+.thumbnailBtn {
+    width: 100px;
+    height: 71px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F7F7;
+    color: #959494;
+    font-size: 14px;
+    border: 1px solid #D1D0D0;
+}
+
+.additionalDetailsHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    outline: 1px solid #DEDCDC;
+}
+
+.additionalDetailsPanel {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 10px;
+    border-left: 1px solid #DEDCDC;
+    border-right: 1px solid #DEDCDC;
+    border-bottom: 1px solid #DEDCDC;
+    gap: 15px;
+}
+
+.loaderContainer {
+    width: 100vw;
+    height: 100vh;
+    z-index: 9;
+    background-color: #272525;
+    opacity: 0.5;
+    position: fixed;
+    inset: 0px;
+    display: flex;
+    z-index: 999;
+    pointer-events: auto;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+
+.popupContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.previewImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logoutBtn {
+    padding: 5px 15px;
+    background-color: transparent;
+    border: 1px solid #DEDCDC;
+    cursor: pointer;
+}
