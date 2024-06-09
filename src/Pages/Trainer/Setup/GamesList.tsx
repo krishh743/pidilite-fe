@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 import openeye from "../../../Assets/Images/openeye.png";
 import "./Setup.css";
-import OngoingGames from "./OngoingGames";
 
 interface GameOverview {
   id: number | null | string;
@@ -14,7 +13,7 @@ interface GameOverview {
   };
 }
 
-const GamesList = ({redirectOngoing}) => {
+const GamesList = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const appUrl = process.env.REACT_APP_WEBSITE_URL;
@@ -45,7 +44,6 @@ const GamesList = ({redirectOngoing}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const [window, setWindow] = React.useState('gongoing-games')
 
   useEffect(() => {
     const fetchGamesList = async () => {
@@ -67,8 +65,6 @@ const GamesList = ({redirectOngoing}) => {
 
     fetchGamesList();
   }, []);
-
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -138,8 +134,7 @@ const GamesList = ({redirectOngoing}) => {
 
   const launchGame = async (gameId: number | null | string) => {
     setIsLoading(true);
-    //  setWindow('ongoing-games')
-    redirectOngoing('ongoing-games')
+
     try {
       const launchResponse = await fetch(`${baseUri}/api/gameplay`, {
         method: "POST",
@@ -155,14 +150,10 @@ const GamesList = ({redirectOngoing}) => {
       const launchResData = await launchResponse.json();
       setIsLoading(false);
       setGameId(launchResData.url);
-
-    
-
     } catch (error) {
       alert(error);
       setIsLoading(false);
     }
-
   };
 
   const handlePreviewGame = async (game: GameOverview) => {
@@ -174,7 +165,7 @@ const GamesList = ({redirectOngoing}) => {
           Authorization: `${localStorage.getItem("token")}`,
         },
       }
-    );    
+    );
 
     const imageBlob = await image.blob();
     setPreviewImageSrc(URL.createObjectURL(imageBlob));
@@ -197,21 +188,13 @@ const GamesList = ({redirectOngoing}) => {
   };
 
   const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("en-US", options);
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
   };
 
   const formatTime = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return date.toLocaleTimeString("en-US", options);
+    const options: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    return date.toLocaleTimeString('en-US', options);
   };
 
   return (

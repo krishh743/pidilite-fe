@@ -64,7 +64,7 @@ const Archives = () => {
 
             const archivedGamesListResdata = await archivedGamesResponse.json();
             console.log("gamelistResponse", archivedGamesListResdata);
-            setGameListData(archivedGamesListResdata[0]);
+            setGameListData(archivedGamesListResdata);
         } catch (error) {
             console.log(error)
         }
@@ -170,9 +170,7 @@ const Archives = () => {
     }
 
     const handlePreviewGame = async (game: gameOverview) => {
-        const bgImageForUrl =game.additionalDetails.backgroundImage;
-
-        const image = await fetch(`${baseUri}/download/${bgImageForUrl }`, {
+        const image = await fetch(`${baseUri}/download/${game.additionalDetails.backgroundImage}`, {
             method: 'GET',
             headers: {
                 'Authorization': `${localStorage.getItem('token')}`
@@ -240,11 +238,10 @@ const Archives = () => {
                                     <td>{index + 1}</td>
                                     <td>{game.gameType}</td>
                                     <td>{game.variationName}</td>
-                                    <td>{game?.name}</td>
+                                    <td>Santosh Yadav</td>
                                     <td>{game.id}</td>
                                     <td className='viewColumn'>
                                         <img
-                                        style={{cursor:"pointer"}}
                                             className='openEye'
                                             onClick={() => openGame(game)}
                                             src={openeye}

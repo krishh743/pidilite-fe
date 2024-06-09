@@ -48,16 +48,15 @@ function Setup() {
 
 
     const [isLoading, setIsLoading] = React.useState(false)
-    // const [test,setTest]=useState(false)
+
 
     const handleClosePopup = () => {
         setOpenPopup(false)
     }
 
-    // console.log(location,"line57")
-    const [window, setWindow] = React.useState(location.state ? location?.state : "games-list")
+    const [window, setWindow] = React.useState('games-list')
 
-    // useState(location?.state ? location?.state : "games-list"
+
     //  discuss multiple launch games edge with omkar - " Woh screen dikhna band ho jayaga na... So yeah he can open a second tab and launch "
 
     return (
@@ -97,7 +96,7 @@ function Setup() {
             <div className="setupPageContent">
                 <div className="setupSideBar">
                     <a href="/training-games" className="setupSideBarItem">Training Games</a>
-                    {/* <a href="/setup" className="setupSideBarItem">Setup</a> */}
+                    <a href="/setup" className="setupSideBarItem">Setup</a>
                     <a href="/gameplay" className={`setupSideBarItem ${location.pathname === '/trainer-setup' ? 'activeSidebarLink' : ''}`}>Game Play</a>
                     <a href="/leaderboard" className="setupSideBarItem">Players & Leaderboard</a>
                 </div>
@@ -106,9 +105,9 @@ function Setup() {
 
                     <div className="panelBtns">
                         <div className="LiveAndArchiveBtns">
-                            <button className={`${window === 'games-list' ? 'openedWindow' : ''}`} onClick={() => setWindow('games-list')} style={{cursor:"pointer"}}>Games list</button>
-                            <button className={`${window === 'ongoing-games' ? 'openedWindow' : ''}`} onClick={() => setWindow('ongoing-games')} style={{cursor:"pointer"}}>Ongoing Games</button>
-                            <button className={`${window === 'archives' ? 'openedWindow' : ''}`} onClick={() => setWindow('archives')} style={{cursor:"pointer"}}>Archives</button>
+                            <button className={`${window === 'games-list' ? 'openedWindow' : ''}`} onClick={() => setWindow('games-list')}>Games list</button>
+                            <button className={`${window === 'ongoing-games' ? 'openedWindow' : ''}`} onClick={() => setWindow('ongoing-games')}>Ongoing Games</button>
+                            <button className={`${window === 'archives' ? 'openedWindow' : ''}`} onClick={() => setWindow('archives')}>Archives</button>
                         </div>
                         <div className="basicDetailsHeaderBtns">
                             {/* <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button> */}
@@ -125,7 +124,7 @@ function Setup() {
 
                     <div className="previewGameMain">
                         {window === 'games-list' && (
-                            <GamesList redirectOngoing={setWindow}/>
+                            <GamesList />
                         )}
                         {window === 'ongoing-games' && (
                             <OngoingGames />

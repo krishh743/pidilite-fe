@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Setup.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import openeye from "../../../Assets/Images/openeye.png";
@@ -21,9 +21,10 @@ const OngoingGames = () => {
   const navigate = useNavigate();
 
   const appUrl = process.env.REACT_APP_WEBSITE_URL;
+
   const baseUri = process.env.REACT_APP_BASE_URL;
 
-  const [previewedGame, setPreviewedGame] = useState<gameOverview>({
+  const [previewedGame, setPreviewedGame] = React.useState<gameOverview>({
     id: null,
     variationId: "",
     gameType: "",
@@ -34,7 +35,7 @@ const OngoingGames = () => {
     },
   });
 
-  const [openedGame, setOpenedGame] = useState<gameOverview>({
+  const [openedGame, setOpenedGame] = React.useState<gameOverview>({
     id: null,
     variationId: "",
     gameType: "",
@@ -46,19 +47,12 @@ const OngoingGames = () => {
     },
   });
 
-  const [gameListData, setGameListData] = useState([]);
-  const [participantsList, setParticipantsList] = useState([]);
-  const [rankingsList, setRankingsList] = useState([]);
-  const [gameId, setGameId] = useState<number | null | string>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [previewImageSrc, setPreviewImageSrc] = useState("");
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-
-  // Pagination state
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
-
+  const [gameListData, setGameListData] = React.useState([]);
+  const [participantsList, setParticipantsList] = React.useState([]);
+  const [rankingsList, setRankingsList] = React.useState([]);
+  const [gameId, setGameId] = React.useState<number | null | string>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [previewImageSrc, setPreviewImageSrc] = React.useState("");
 
   const fetchGamesList = async () => {
     try {
@@ -75,7 +69,7 @@ const OngoingGames = () => {
 
       const ongoingGamesListResdata = await ongoingGamesResponse.json();
       console.log("gamelistResponse", ongoingGamesListResdata);
-      setGameListData(ongoingGamesListResdata[0]);
+      setGameListData(ongoingGamesListResdata);
     } catch (error) {
       console.log(error);
     }
@@ -85,24 +79,8 @@ const OngoingGames = () => {
     fetchGamesList();
   }, []);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000); // Update every second
-
-    return () => clearInterval(intervalId); 
-  }, []);
-
-
-  useEffect(() => {
-
-    if (gameListData.length > 1) {
-      openGame(gameListData[gameListData.length - 1]);
-    }
-  }, [gameListData.length]);
-
-  const openGame = async (game: gameOverview) => {
-    if (previewedGame?.id !== null) {
+  const openGame = (game: gameOverview) => {
+    if (previewedGame.id !== null) {
       setPreviewedGame({
         id: null,
         variationId: "",
@@ -129,7 +107,7 @@ const OngoingGames = () => {
           }
         );
         const leaderBoardData = await leaderBoardResponse.json();
-        console.log("leaderBoardData", leaderBoardData);
+        console.log("lleaderBoardData", leaderBoardData);
         const participants = leaderBoardData.players.flat().map((player) => ({
           id: player.id,
           name: player.name,
@@ -151,28 +129,55 @@ const OngoingGames = () => {
       }
     };
 
-    await fetchLeaderBoardData();
+    fetchLeaderBoardData();
 
-    console.log(game, "game");
+    const fetchBgrndImage = async () => {
+      // try {
+      //     const bgResponse = await fetch(`${baseUri}/api/gameplay/${game.id}`, {
+      //         method: 'GET',
+      //         headers: {
+      //             'Content-Type': 'application/json',
+      //             'Authorization': `${localStorage.getItem('token')}`
+      //         },
+      //     })
+      //     const leaderBoardData = await leaderBoardResponse.json()
+      //     console.log("lleaderBoardData", leaderBoardData)
+      //     const participants = leaderBoardData.players.flat().map(player => ({
+      //         id: player.id,
+      //         name: player.name,
+      //     }));
+      //     setParticipantsList(participants)
+      //     const rankingsList = leaderBoardData.players.flat().map(player => ({
+      //         name: player.name,
+      //         score: player.score,
+      //         finishedTime: new Date(player.finishedTime).toLocaleString()
+      //     }));
+      //     setRankingsList(rankingsList)
+      //     console.log(rankingsList);
+      //     return leaderBoardData
+      // } catch (error) {
+      //     console.log("error", error)
+      //     return []
+      // }
+    };
 
-    const bgImageParsedValue = JSON.parse(game.additionalDetails).backgroundImage
-
+    // setGameListData(gamesListResdata)
     setOpenedGame({
-      id: game?.id,
-      variationId: game?.variationId,
-      url: game?.url,
-      startedAt: game?.startedAt,
-      gameType: game?.gameType,
-      variationName: game?.variationName,
+      id: game.id,
+      variationId: game.variationId,
+      url: game.url,
+      startedAt: game.startedAt,
+      gameType: game.gameType,
+      variationName: game.variationName,
       additionalDetails: {
-        backgroundImage: bgImageParsedValue,
+        backgroundImage: game.additionalDetails.backgroundImage,
       },
     });
+  };
 
-    // console.log(game?.additionalDetails?.backgroundImage,game?.additionalDetails,game,"line169")
-
+  const handlePreviewGame = async (game: gameOverview) => {
     const image = await fetch(
-      `${baseUri}/download/${bgImageParsedValue}`,
+      `${baseUri}/download/${game.additionalDetails.backgroundImage}`,
       {
         method: "GET",
         headers: {
@@ -184,50 +189,21 @@ const OngoingGames = () => {
     const imageBlob = await image.blob();
     setPreviewImageSrc(URL.createObjectURL(imageBlob));
 
-    console.log(imageBlob,URL.createObjectURL(imageBlob),previewImageSrc,"imageBlob")
-
-
     setPreviewedGame({
-      id: game?.id,
-      variationId: game?.variationId,
-      url: game?.url,
-      startedAt: game?.startedAt,
-      gameType: game?.gameType,
-      variationName: game?.variationName,
+      id: game.id,
+      variationId: game.variationId,
+      url: game.url,
+      startedAt: game.startedAt,
+      gameType: game.gameType,
+      variationName: game.variationName,
       additionalDetails: {
-        backgroundImage: game?.additionalDetails?.backgroundImage,
+        backgroundImage: game.additionalDetails.backgroundImage,
       },
     });
   };
 
-  console.log(gameListData, "gameListData");
-
   const handleFullScreenSpectateGame = () => {
     navigate(`/game-spectate/${openedGame.url}`);
-  };
-
-  // Pagination logic
-  const totalPages = Math.ceil(gameListData.length / rowsPerPage);
-  const currentData = gameListData.slice(
-    (currentPage - 1) * rowsPerPage,
-    currentPage * rowsPerPage
-  );
-
-  const handlePrevPage = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
-
-  const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("en-US", options);
   };
 
   return (
@@ -257,16 +233,16 @@ const OngoingGames = () => {
               </tr>
             </thead>
             <tbody className="listTableBody">
-              {currentData?.map((game: gameOverview, index) => (
+              {gameListData?.map((game: gameOverview, index) => (
                 <tr key={index}>
-                  <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
-                  <td>{game?.gameType}</td>
-                  <td>{game?.variationName}</td>
-                  <td>{game?.name}</td>
-                  <td>{game?.id}</td>
+                  <td>{index + 1}</td>
+                  <td>{game.gameType}</td>
+                  <td>{game.variationName}</td>
+                  <td>Santosh Yadav</td>
+                  <td>{game.id}</td>
                   <td className="viewColumn">
                     <img
-                      style={{ cursor: "pointer" }}
+                    style={{cursor:"pointer"}}
                       className="openEye"
                       onClick={() => openGame(game)}
                       src={openeye}
@@ -277,20 +253,9 @@ const OngoingGames = () => {
               ))}
             </tbody>
           </table>
-          <div className="paginationControls">
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-              Next
-            </button>
-          </div>
         </div>
         <div className="trainerSetupDetailsContainer">
-          {openedGame?.id === null ? (
+          {openedGame.id === null ? (
             <div className="">No opened Game</div>
           ) : (
             <div className="trainerSetupDetailsContainerCard">
@@ -303,13 +268,13 @@ const OngoingGames = () => {
                     Variation ID
                   </span>
                   <span className="trainerGameDetailFieldValue">
-                    {openedGame?.id}
+                    {openedGame.id}
                   </span>
                 </div>
                 <div className="trainerGameDetailsRow">
                   <span className="trainerGameDetailFieldName">Game Type</span>
                   <span className="trainerGameDetailFieldValue">
-                    {openedGame?.gameType}
+                    {openedGame.gameType}
                   </span>
                 </div>
                 <div className="trainerGameDetailsRow">
@@ -317,33 +282,41 @@ const OngoingGames = () => {
                     Variation Name
                   </span>
                   <span className="trainerGameDetailFieldValue">
-                    {openedGame?.variationName}
+                    {openedGame.variationName}
                   </span>
                 </div>
                 <div
                   className={`DateNTimeContainer ${
-                    openedGame?.id === previewedGame?.id ? "" : "hidden"
+                    openedGame.id === previewedGame.id ? "" : "hidden"
                   }`}
                 >
                   <div className="DateContainer">
-                    <span className="dateHeading">  Date: {formatDate(currentDate)}</span>
+                    <span className="dateHeading">Date: 12-Mar-2024</span>
                   </div>
                   <div className="TimeContainer">
                     <span className="timeHeading">
-                      {openedGame?.startedAt === null
-                        ? "-"
-                        : `${openedGame?.startedAt}`}
+                      {openedGame.startedAt === null} ? '-': `$
+                      {openedGame.startedAt}`{" "}
                     </span>
                   </div>
                 </div>
 
                 <div className="qrContainer">
-                  {previewedGame?.id !== null && (
+                  {previewedGame.id !== null && (
                     <QRCode
-                      value={`${appUrl}/game-play/${previewedGame?.url}`}
+                      value={`${appUrl}/game-play/${previewedGame.url}`}
                     />
                   )}
                 </div>
+                <button
+                  className={`trainerSetupDetailsContainerCardBtn ${
+                    previewedGame.id === openedGame.id ? "hidden" : ""
+                  }`}
+                  onClick={() => handlePreviewGame(openedGame)}
+                >
+                  Preview Game
+                </button>
+                {/* <button className='trainerSetupDetailsContainerCardBtn' onClick={() => launchGame(previewedGame.id)}>Launch Game</button> */}
               </div>
             </div>
           )}
@@ -355,6 +328,54 @@ const OngoingGames = () => {
           previewedGame.id !== null ? "" : "hidden"
         }`}
       >
+        {/* <div className="participantsAndRankings">
+                    <div className="participantsContainer">
+                        <div className="listTableTopDiv">
+                            <h2 className="">PARTICIPANTS</h2>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr className='listTableHeader'>
+                                    <th>Sno</th>
+                                    <th>NAME</th>
+                                </tr>
+                            </thead>
+                            <tbody className='listTableBody'>
+                                {participantsList?.map((participant: any, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{participant.name}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="rankingsContainer">
+                        <div className="listTableTopDiv">
+                            <h2 className="">RANKINGS</h2>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr className='listTableHeader'>
+                                    <th>Sno</th>
+                                    <th>NAME</th>
+                                    <th>RANK</th>
+                                    <th>SPEED</th>
+                                </tr>
+                            </thead>
+                            <tbody className='listTableBody'>
+                                {rankingsList?.map((participant: any, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{participant.name}</td>
+                                        <td>{participant.score}</td>
+                                        <td>{participant.finishedTime}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div> */}
         <div className="boardContainer">
           <div className="boardContainerTop">
             <h2 className="">BOARD & CONTROLS</h2>
@@ -366,7 +387,7 @@ const OngoingGames = () => {
             className={`fullScreenBtn`}
             onClick={handleFullScreenSpectateGame}
           >
-            FULL SCREEN
+            {/* OPEN GAME */} FULL SCREEN
           </button>
         </div>
       </div>

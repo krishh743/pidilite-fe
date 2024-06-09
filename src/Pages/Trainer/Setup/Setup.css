@@ -85,7 +85,6 @@
 
 .openedWindow{
     color: red;
-    cursor: pointer;
 }
 .gameUrlFieldContainer{
     display: flex;
@@ -192,33 +191,3 @@ padding-bottom: 24px;
     cursor: pointer;
     margin-top: 24px !important;
 }
-
-
-/* // ongoing page */
-
-
-.paginationControls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .paginationControls button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .paginationControls button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .paginationControls span {
-    margin: 0 10px;
-  }
-  

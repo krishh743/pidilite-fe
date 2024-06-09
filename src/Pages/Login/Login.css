@@ -70,3 +70,16 @@
     padding-right: 10px;
     font-size: 12px;
 }
+
+.loginMain {
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  /* Adjust overflow for specific elements if needed */
+  .loginCard {
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .banner {
+    overflow: hidden; /* Hide overflow content */
+  }

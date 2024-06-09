@@ -78,7 +78,7 @@ const Setup = () => {
           {/* <a href="/add-users" className="setupSideBarItem">Add Users</a> */}
           <a href="/admin-add-user" className={`setupSideBarItem ${location.pathname === '/admin-add-user' ? 'activeSidebarLink' : ''}`}>Add Users</a>
           <a href="/training-games" className="setupSideBarItem">Training Games</a>
-          <a href="/setup" className={`setupSideBarItem ${location.pathname === '/admin-setup' ? 'activeSidebarLink' : ''}`}>Setup</a>
+          <a href="/setup" className={`setupSideBarItem ${location.pathname === '/setup' ? 'activeSidebarLink' : ''}`}>Setup</a>
           <a href="/gameplay" className="setupSideBarItem">Game Play</a>
           <a href="/leaderboard" className="setupSideBarItem">Players & Leaderboard</a>
         </div>

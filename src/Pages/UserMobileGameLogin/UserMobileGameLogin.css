@@ -127,7 +127,7 @@
     left: 50%;
     transform: translate(-50%, -50%); */
     /* bottom: 68px; */
-    bottom: 1%;
+    bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
@@ -220,18 +220,4 @@
 
 .mobileLoginCard input:-webkit-autofill {
     background-color: white !important;
-}
-
-.connectionStatus {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    z-index: 1000;
-    text-align: center;
-    font-size: 18px;
 }

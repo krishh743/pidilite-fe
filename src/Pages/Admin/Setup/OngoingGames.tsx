@@ -195,6 +195,7 @@ const OngoingGames = ({ setWindow, window }) => {
     }
 
     const handleFullScreenSpectateGame = () => {
+        console.log('gameId --->',gameId)
         if (gameId === null) {
             return;
         }

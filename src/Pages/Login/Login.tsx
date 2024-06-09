@@ -3,6 +3,8 @@ import './Login.css'
 import banner from '../../Assets/Images/login-banner.png'
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 
 const Login = () => {
 
@@ -10,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = React.useState('');
 
   const [isLoading, setIsLoading] = React.useState(false)
+  const handle = useFullScreenHandle();
 
 
   const baseUri = process.env.REACT_APP_BASE_URL
@@ -61,6 +64,8 @@ const Login = () => {
     }
   }
 
+
+
   return (
     <div className='loginMain'>
       {
@@ -102,7 +107,6 @@ const Login = () => {
           </span>
           <input type="password" className="" onChange={(e) => setPassword(e.target.value)} />
         </div>
-
 
       </div>
       <button className='enterbtn' onClick={handleSubmit}>Enter</button>
