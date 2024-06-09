@@ -117,6 +117,7 @@ const UserMobileGameLogin = () => {
 
                 newSocket.on('disconnect', () => {
                     console.log('Socket disconnected');
+                    toast("Connection Lost, attempting to reconnect...")
                 });
 
             }
@@ -185,6 +186,12 @@ const UserMobileGameLogin = () => {
 
         })
 
+        socketConnection.on('onclose', (data) => {
+            console.log('yourTurn', data)
+            alert('close...')
+
+        })
+
         socketConnection.on('gameOver', (data) => {
             console.log('gameOver', data)
         })
@@ -196,6 +203,8 @@ const UserMobileGameLogin = () => {
 
         socketConnection.on('error', (data) => {
             console.log('socket error', data)
+            toast("Connect")
+
         })
 
         // socketConnection.on('yourTurn', (data) => {
@@ -247,7 +256,6 @@ const UserMobileGameLogin = () => {
                     setIsDiceVisible(false);
                 }, 3000);
 
-                setCurrentPosition(data.player.score)
 
                 if (data.player.score === 64) {
                     // toast(`${data.message}`, { 
@@ -256,11 +264,17 @@ const UserMobileGameLogin = () => {
                     setIsUserWon(true)
                     return;
                 }
-                toast(data.message)
+                setTimeout(() => {
+                setCurrentPosition(data.player.score)
+
+
+                    toast(data.message)
+                }, 2000)
             } else {
+
                 setTimeout(() => {
                     toast(data.message)
-                }, 1000)
+                }, 2000)
             }
             console.log('resume msg', data)
         })
@@ -394,7 +408,7 @@ const UserMobileGameLogin = () => {
                         <button className="enterBtn" onClick={handleLogin}>
                             ENTER
                         </button>
-                    
+
                     </div>
                 )}
             </div >

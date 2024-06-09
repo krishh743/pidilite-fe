@@ -1,6 +1,7 @@
 .gameMain {
     width: 100%;
     height: 100vh;
+    z-index: 1
 }
 
 .productImage {
@@ -15,7 +16,7 @@
 
 }
 
-.popupCloseIcon{
+.popupCloseIcon {
     position: absolute;
     right: 0;
     top: 0;
@@ -23,13 +24,14 @@
     height: 84px;
 
 }
-.trainerBackgroundContainer{
+
+.trainerBackgroundContainer {
     flex-grow: 1;
     height: 100vh;
     position: relative;
 }
 
-.trainerBgrndImage{
+.trainerBgrndImage {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -39,12 +41,12 @@
     z-index: -1;
 }
 
-.leaderBoardPopupContent{
+.leaderBoardPopupContent {
     display: flex;
     flex-direction: column;
 }
 
-.leaderboardPlayerCard{
+.leaderboardPlayerCard {
     display: flex;
     justify-content: space-between;
     padding: 24px 48px;
@@ -52,7 +54,7 @@
     gap: 48px;
 }
 
-.leaderboardPlayerCard p{
+.leaderboardPlayerCard p {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,6 +75,9 @@
     gap: 48px;
     padding-top: 48px;
     justify-content: center;
+    background-color: #B1D4F1;
+    height: 40vh;
+    align-items: flex-start;
 }
 
 .playerLobbyDiv {
@@ -208,20 +213,21 @@
     padding: 100px;
     padding-left: 145px;
 }
-.snlTable tbody{
+
+.snlTable tbody {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.snlTable tbody tr{
+.snlTable tbody tr {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
 
-.snlTable tbody tr th{
+.snlTable tbody tr th {
     width: 70px;
     flex-grow: 1;
     height: 75px;
@@ -239,10 +245,10 @@
 
 .boardUserProfileSVGContainer {
     left: 0;
-right: 0;
-margin: auto;
-    width: 50px;
-    height: 50px;
+    right: 0;
+    /* margin: auto; */
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     /* box-shadow: 0px 30px 20px -20px rgba(0.5, 0.5, 0.5, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45); */
     -webkit-box-shadow: 3px 18px 35px -11px rgba(0, 0, 0, 0.55);
@@ -314,7 +320,8 @@ margin: auto;
     position: relative;
     display: flex;
     flex-direction: column;
-    color: #F69970;;
+    color: #F69970;
+    ;
 }
 
 
@@ -328,6 +335,11 @@ margin: auto;
     color: #636363 !important;
     font-size: 30px !important;
     height: 40px;
+}
+.gameBoardbuttons-wrapper{
+    background-color: #B1D4F1;
+    margin-top: -15px;
+    padding-top: 15px;
 }
 
 .gameBoardbuttons {

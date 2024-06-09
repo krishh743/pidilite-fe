@@ -45,7 +45,7 @@ interface GameCell {
 }
 
 const Game = () => {
-    const navigate =useNavigate()
+    const navigate = useNavigate()
     const { id } = useParams();
     const baseUri = process.env.REACT_APP_BASE_URL
 
@@ -114,8 +114,6 @@ const Game = () => {
             })
         });
     }
-
-    console.log(previewLeaderboard,"previewLeaderboard")
 
     useEffect(() => {
 
@@ -600,10 +598,10 @@ const Game = () => {
             });
 
             const factoidImgName = data.factoid // this is passed in for loop'd end
-console.log(factoidImgName,"factoidImgName")
+            console.log(factoidImgName, "factoidImgName")
             setTimeout(() => {
                 rollDice();
-            }, 1000)
+            }, 100)
 
 
             // Delay (factoid + positions updation, diceValue update) by 3 seconds
@@ -662,7 +660,7 @@ console.log(factoidImgName,"factoidImgName")
 
                     if (i === steps) {  // at last step show factoid
                         if (data.factoid !== null) {
-                            console.log(data,"line663")
+                            console.log(data, "line663")
                             previewFactoid(factoidImgName)
                             console.log(" previewFactoid(factoidImgName)")
                         }
@@ -688,7 +686,11 @@ console.log(factoidImgName,"factoidImgName")
                 return;
             }
 
-            toast(data.message)
+            setTimeout(() => {
+
+                toast(data.message)
+            }, 1000)
+
         }
 
 
@@ -721,9 +723,9 @@ console.log(factoidImgName,"factoidImgName")
         };
     }, [])
 
-    const handleExitFullScreen = () =>{
+    const handleExitFullScreen = () => {
         console.log("handleExitFullScreen")
-        navigate("/trainer-setup",{state:"ongoing-games"})
+        navigate("/trainer-setup")
     }
 
     const handleStartBtn = () => {
@@ -782,7 +784,7 @@ console.log(factoidImgName,"factoidImgName")
     const previewFactoid = async (imageName: string) => {
         setIsLoading(true);
         console.log("imageUrl", imageName);
-    
+
         try {
             // Uncomment and update this section if you need to fetch the image from the server.
             // const image = await fetch(`${baseUri}/download/${imageUrl}`, {
@@ -792,10 +794,10 @@ console.log(factoidImgName,"factoidImgName")
             //     },
             // });
             // const imageBlob = await image.blob();
-    
+
             const imageSrc = localStorage.getItem(imageName);
             console.log(imageSrc !== null, "checkkkss");
-            
+
             if (imageName !== null) {
                 console.log("one");
                 setPreviewedImage(imageSrc as string);
@@ -811,7 +813,7 @@ console.log(factoidImgName,"factoidImgName")
             setIsLoading(false); // Ensure loading is stopped in both success and error cases
         }
     };
-    
+
 
 
     useEffect(() => {
@@ -823,6 +825,10 @@ console.log(factoidImgName,"factoidImgName")
 
 
     }, [socketConnection])
+
+    useEffect(() => {
+        setZoomLevel(60)
+    }, [])
 
     // console.log('players-outside', players)
 
@@ -905,118 +911,234 @@ console.log(factoidImgName,"factoidImgName")
         document.dispatchEvent(event);
     };
 
+    const gameRef: any = React.useRef(null);
+
+    const enterFullscreen = () => {
+        const elem = gameRef.current;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { // Firefox
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+            elem.webkitRequestFullscreen();
+        }
+    };
+
+    const exitFullscreen = () => {
+        let documentObj: any = document;
+        if (documentObj.exitFullscreen) {
+            documentObj.exitFullscreen();
+        } else if (documentObj.mozCancelFullScreen) { // Firefox
+            documentObj.mozCancelFullScreen();
+        } else if (documentObj.webkitExitFullscreen) { // Chrome, Safari, and Opera
+            documentObj.webkitExitFullscreen();
+        }
+    };
+
+    const handleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            updateZoom()
+            enterFullscreen();
+        } else {
+            exitFullscreen();
+        }
+    };
+    const [zoomLevel, setZoomLevel] = useState(100); // Initial zoom level
+
+    const handleZoomIn = () => {
+        setZoomLevel(prevZoom => prevZoom + 10); // Increase zoom level by 10%
+    
+    };
+
+    const handleZoomOut = () => {
+        setZoomLevel(prevZoom => prevZoom - 10); // Decrease zoom level by 10%
+      
+    };
+
+    const updateZoom = () => {
+        let documentObj = document
+        documentObj.documentElement.style.zoom = `${zoomLevel}%`;
+    };
+
+    console.log('document.fullscreenElement -->', document.fullscreenElement)
+    
+    useEffect(() => {
+        updateZoom();
+    }, [zoomLevel])
+
+    useEffect(() => {
+        const handleFullscreen = async () => {
+            const element = document.documentElement;
+            try {
+                await element.requestFullscreen();
+            } catch (err) {
+                console.error('Error attempting to enable full-screen mode:', err.message);
+            }
+        };
+
+        // handleFullscreen();
+
+        let documentObj = document
+        documentObj.documentElement.style.zoom = '50%';
+
+        const exitFullscreen = async () => {
+            if (document.fullscreenElement) {
+                try {
+                    await document.exitFullscreen();
+                } catch (err) {
+                    console.error('Error attempting to exit full-screen mode:', err.message);
+                }
+            }
+        };
+
+        return () => {
+            exitFullscreen()
+            let documentObj: any = document
+            documentObj.documentElement.style.zoom = '100%';
+
+        }
+    }, [])
+
+    useEffect(() => {
+
+        if(!document.fullscreenElement){
+            const exitFullscreen = async () => {
+                if (document.fullscreenElement) {
+                    try {
+                        await document.exitFullscreen();
+                    } catch (err) {
+                        console.error('Error attempting to exit full-screen mode:', err.message);
+                    }
+                }
+            };
+
+            exitFullscreen()
+        }
+
+    },[!!document.fullscreenElement])
+
+
+
+
+
+
+
 
     return (
-        <div className='gameMain'>
-            <Popup open={openPopup} onClose={handleClosePopup} position="right center">
-                <div className='popupContent'>
-                    <img src={previewedImage} alt="" className="previewImage" />
-                    <img className='popupCloseIcon' alt='popupformoves' onClick={handleClosePopup} src={closeIcon}></img>
-                </div>
-            </Popup>
 
-            <Popup open={openLeaderboardPopup} onClose={handleCloseLeaderboardPopup} position="right center">
-                <div className='leaderBoardPopupContent'>
-                    {previewLeaderboard.map((player, index) => (
-                        <div className="leaderboardPlayerCard" key={index}>
-                            <div className="boardUserProfileSVGContainerForLeaderboard">
-                                <MySVGComponent color={player.color} />
+
+        <div>
+            <div ref={gameRef}>
+                <div className='gameMain'>
+                    <Popup open={openPopup} onClose={handleClosePopup} position="right center">
+                        <div className='popupContent'>
+                            <img src={previewedImage} alt="" className="previewImage" />
+                            <img className='popupCloseIcon' alt='popupformoves' onClick={handleClosePopup} src={closeIcon}></img>
+                        </div>
+                    </Popup>
+
+                    <Popup open={openLeaderboardPopup} onClose={handleCloseLeaderboardPopup} position="right center">
+                        <div className='leaderBoardPopupContent'>
+                            {previewLeaderboard.map((player, index) => (
+                                <div className="leaderboardPlayerCard" key={index}>
+                                    <div className="boardUserProfileSVGContainerForLeaderboard">
+                                        <MySVGComponent color={player.color} />
+                                    </div>
+                                    <p>Name: {player.name}</p>
+                                    <p>Score: {handleExtraScore(player.score)}</p>
+                                    <p>Moves: {player.numberOfMoves}</p>
+                                    <p>Number of Devices: {player.numberOfDevices}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </Popup>
+
+                    {
+                        isLoading && (
+                            <div className="loaderContainer">
+                                <div className="loader">
+                                    <Oval
+                                        visible={true}
+                                        height="50"
+                                        width="50"
+                                        color="#ffffff"
+                                        ariaLabel="oval-loading"
+                                    // wrapperStyle={{}}
+                                    // wrapperClass=""
+                                    />
+                                </div>
                             </div>
-                            <p>Name: {player.name}</p>
-                            <p>Score: {handleExtraScore(player.score)}</p>
-                            <p>Moves: {player.numberOfMoves}</p>
-                            <p>Number of Devices: {player.numberOfDevices}</p>
-                        </div>
-                    ))}
-                </div>
-            </Popup>
 
-            {
-                isLoading && (
-                    <div className="loaderContainer">
-                        <div className="loader">
-                            <Oval
-                                visible={true}
-                                height="50"
-                                width="50"
-                                color="#ffffff"
-                                ariaLabel="oval-loading"
-                            // wrapperStyle={{}}
-                            // wrapperClass=""
-                            />
-                        </div>
+                        )
+                    }
+
+                    <Toaster
+                        toastOptions={{
+                            // Define default options
+                            className: '',
+                            duration: 5000,
+                            style: {
+                                background: '#363636',
+                                color: '#fff',
+                                padding: '48px 64px',
+                                fontSize: '48px',
+                            },
+                            success: {
+                                duration: 3000,
+                            },
+                        }}
+                    />
+                    <div className='nav'>
+                        <img src={logo} alt="" className='logo' />
+                        <span className="">{`${gametype === 'snl' ? 'Snakes & Ladders' : 'K'}: ${variationName}`}</span>
+                        <img src={ham} alt="" className='ham' />
                     </div>
-
-                )
-            }
-
-            <Toaster
-                toastOptions={{
-                    // Define default options
-                    className: '',
-                    duration: 5000,
-                    style: {
-                        background: '#363636',
-                        color: '#fff',
-                        padding: '48px 64px',
-                        fontSize: '48px',
-                    },
-                    success: {
-                        duration: 3000,
-                    },
-                }}
-            />
-            <div className='nav'>
-                <img src={logo} alt="" className='logo' />
-                <span className="">{`${gametype === 'snl' ? 'Snakes & Ladders' : 'K'}: ${variationName}`}</span>
-                <img src={ham} alt="" className='ham' />
-            </div>
-            <div className="gameBanner">
-                <img src={siteBanner} alt="" />
-            </div>
-            <div className="trainerBackgroundContainer">
-                <img src={trainerBackground} className='trainerBgrndImage'></img>
-                <div className="gameBoardContainer">
-                    <div className="playerCard">
-                        <span className='playerHeader'>PLAYER</span>
-                        <div className="playerCardInner">
-                            {/* <div className="currentPlayerBoardSectionProfile" style={{ backgroundColor: currentPlayerColor }}>
+                    <div className="gameBanner">
+                        <img src={siteBanner} alt="" />
+                    </div>
+                    <div className="trainerBackgroundContainer">
+                        <img src={trainerBackground} className='trainerBgrndImage'></img>
+                        <div className="gameBoardContainer">
+                            <div className="playerCard">
+                                <span className='playerHeader'>PLAYER</span>
+                                <div className="playerCardInner">
+                                    {/* <div className="currentPlayerBoardSectionProfile" style={{ backgroundColor: currentPlayerColor }}>
                             <img src={person} alt="" className="userProfileBodyImg" />
                         </div> */}
-                            <div className="profileSVGContainer">
-                                <MySVGComponent color={currentPlayerColor} />
-                            </div>
-                            {currentPlayerName === '' ? (
-                                <div className=""></div>
-                            ) : (
-                                <span className='currentPlayerName'>{`${currentPlayerName}`}</span>
-                            )}
+                                    <div className="profileSVGContainer">
+                                        <MySVGComponent color={currentPlayerColor} />
+                                    </div>
+                                    {currentPlayerName === '' ? (
+                                        <div className=""></div>
+                                    ) : (
+                                        <span className='currentPlayerName'>{`${currentPlayerName}`}</span>
+                                    )}
 
-                            {/* <span className='currentPlayerName'>ANAS</span> */}
-                        </div>
-                        <div className="diceCardInnerContainer">
-                            {!isDiceVisible && diceValue ? (
-                                <div className=""></div>
-                            ) : (
-                                <Dice
-                                    defaultValue={1}
-                                    onRoll={(value) => console.log("dice value", value)}
-                                    size={100}
-                                    cheatValue={diceValue}
-                                    triggers={['Enter']}
-                                />
-                                // <Dice
-                                //     defaultValue={diceValue}
-                                //     onRoll={(value) => console.log(value)}
-                                //     size={100}
-                                //     cheatValue={diceValue}
-                                //     triggers={diceTriggers}
-                                // />
-                            )}
-                        </div>
-                    </div>
-                    <div className="gameBoard">
-                        {/* <table className='snlTable'>
+                                    {/* <span className='currentPlayerName'>ANAS</span> */}
+                                </div>
+                                <div className="diceCardInnerContainer">
+                                    {!isDiceVisible && diceValue ? (
+                                        <div className=""></div>
+                                    ) : (
+                                        <Dice
+                                            defaultValue={1}
+                                            onRoll={(value) => console.log("dice value", value)}
+                                            size={100}
+                                            cheatValue={diceValue}
+                                            triggers={['Enter']}
+                                        />
+                                        // <Dice
+                                        //     defaultValue={diceValue}
+                                        //     onRoll={(value) => console.log(value)}
+                                        //     size={100}
+                                        //     cheatValue={diceValue}
+                                        //     triggers={diceTriggers}
+                                        // />
+                                    )}
+                                </div>
+                            </div>
+                            <div className="gameBoard">
+                                {/* <table className='snlTable'>
                         <tbody>
                             {memoizedValue.reverse().map((row, rowIndex) => (
                                 <tr key={`tr-${rowIndex}`}>
@@ -1036,62 +1158,65 @@ console.log(factoidImgName,"factoidImgName")
                             ))}
                         </tbody>
                     </table> */}
-                        <table className='snlTable'>
-                            <tbody>
-                                {memoizedValue.reverse().map((row, rowIndex) => (
-                                    <tr key={`tr-${rowIndex}`}>
-                                        {row.reverse().map((value, colIndex) => (
-                                            <th key={`th-${colIndex}`}>
-                                                <div className="snlTableBlock">
-                                                    {typeof value === 'number' ? value : (
-                                                        // <div className="snlCoin" style={{ backgroundColor: (value as Player).color }}>
-                                                        //     <img src={person} alt="" className="userProfileBodyImg" />
-                                                        // </div>
-                                                        <div className="boardUserProfileSVGContainer">
-                                                            <MySVGComponent color={(value as Player).color} />
+                                <table className='snlTable'>
+                                    <tbody>
+                                        {memoizedValue.reverse().map((row, rowIndex) => (
+                                            <tr key={`tr-${rowIndex}`} >
+                                                {row.reverse().map((value, colIndex) => (
+                                                    <th key={`th-${colIndex}`}>
+                                                        <div className="snlTableBlock">
+                                                            {typeof value === 'number' ? value : (
+                                                                // <div className="snlCoin" style={{ backgroundColor: (value as Player).color }}>
+                                                                //     <img src={person} alt="" className="userProfileBodyImg" />
+                                                                // </div>
+                                                                <div className="boardUserProfileSVGContainer">
+                                                                    <MySVGComponent color={(value as Player).color} />
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </th>
+                                                    </th>
+                                                ))}
+                                            </tr>
                                         ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <img src={board} alt="" className='gameBoardImg' />
-                    </div>
-                    <div className="diceCard">
-                        <span>PRODUCT</span>
-                        <div className="diceCardInner">
-                            <img src={productImage} alt="" className="productImage" />
-                        </div>
-                    </div>
-                </div>
-                <div className="gameBoardbuttons">
-                    <button className='exitBtn' onClick={handleExitFullScreen}>EXIT FULL SCREEN</button>
-                    <div className="rightBtns">
-                        <button className='startBtn' onClick={handleStartBtn}>START</button>
-                        <button className='pauseBtn' onClick={handlePauseBtn}>PAUSE</button>
-                        <button className='endBtn' onClick={handleEndBtn}>END</button>
-                    </div>
-                </div>
-
-                <div className="playersLobby">
-                    {players.length === 0 ? (
-                        <div className=""></div>
-                    ) : (
-                        players.map((player: Player, index: number) => (
-                            <div className="playerLobbyDiv" key={index}>
-                                <div className="boardUserProfileSVGContainer">
-                                    <MySVGComponent color={player.color} />
-                                </div>
-                                <p>Name: {player.name}</p>
-                                <p>Score: {player.score}</p>
+                                    </tbody>
+                                </table>
+                                <img src={board} alt="" className='gameBoardImg' />
                             </div>
-                        ))
-                    )}
+                            <div className="diceCard">
+                                <span>PRODUCT</span>
+                                <div className="diceCardInner">
+                                    <img src={productImage} alt="" className="productImage" />
+                                </div>
+                            </div>
+                        </div>
 
-                    {/* <Dice
+                        <div className="gameBoardbuttons-wrapper">
+                            <div className="gameBoardbuttons">
+                                <button className='exitBtn' onClick={handleExitFullScreen}>EXIT FULL SCREEN</button>
+                                <div className="rightBtns">
+                                    <button className='startBtn' onClick={handleStartBtn}>START</button>
+                                    <button className='pauseBtn' onClick={handlePauseBtn}>PAUSE</button>
+                                    <button className='endBtn' onClick={handleEndBtn}>END</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="playersLobby">
+                            {players.length === 0 ? (
+                                <div className=""></div>
+                            ) : (
+                                players.map((player: Player, index: number) => (
+                                    <div className="playerLobbyDiv" key={index}>
+                                        <div className="boardUserProfileSVGContainer">
+                                            <MySVGComponent color={player.color} />
+                                        </div>
+                                        <p>Name: {player.name}</p>
+                                        <p>Score: {player.score}</p>
+                                    </div>
+                                ))
+                            )}
+
+                            {/* <Dice
                     defaultValue={1}
                     onRoll={(value) => console.log("dice value", value)}
                     size={100}
@@ -1099,12 +1224,24 @@ console.log(factoidImgName,"factoidImgName")
                     triggers={['Enter']}
                 /> */}
 
-                    {/* <button onClick={rollDice}>Roll Dice</button> */}
+                            {/* <button onClick={rollDice}>Roll Dice</button> */}
 
-                </div>
+                        </div>
+                    </div>
+
+                </div >
             </div>
 
-        </div >
+            {/* <div style={{position: 'absolute', top: 10, right: 10, zIndex: 99999999999}}> */}
+            <div style={{ position:'absolute', bottom: 10, right: 40, zIndex: 999999999999 }}>
+                {/* <button id="fullscreen-button" >full screen</button> */}
+                <button style={{ width: '40px', height: '30px', backgroundColor: 'grey', borderRadius: '10%', marginRight: '10px', color: '#fff' }} onClick={handleZoomIn}>+</button>
+                {zoomLevel}%
+                <button style={{ width: '40px', height: '30px', backgroundColor: 'grey', borderRadius: '10%', marginLeft: '10px', color: "#fff" }} onClick={handleZoomOut}>-</button>
+            </div>
+        </div>
+
+
     )
 }
 
