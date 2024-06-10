@@ -746,7 +746,8 @@ const Game = () => {
 
     const handleExitFullScreen = () => {
         console.log("handleExitFullScreen")
-        navigate("/trainer-setup")
+        // navigate("/trainer-setup")
+        navigate("/trainer-setup",{state:"ongoing-games"})
     }
 
     const handleStartBtn = () => {
@@ -848,7 +849,7 @@ const Game = () => {
     }, [socketConnection])
 
     useEffect(() => {
-        setZoomLevel(60)
+        setZoomLevel(80)
     }, [])
 
     // console.log('players-outside', players)

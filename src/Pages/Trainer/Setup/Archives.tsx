@@ -51,6 +51,7 @@ const Archives = () => {
     const [isLoading, setIsLoading] = React.useState(false)
     const [previewImageSrc, setPreviewImageSrc] = React.useState('')
 
+    const [startedAt, setStartedAt] = React.useState(null);
 
     const fetchGamesList = async () => {
         try {
@@ -107,6 +108,7 @@ const Archives = () => {
 
                 }));
                 setParticipantsList(participants)
+                setStartedAt(leaderBoardData.startedAt);
 
                 const rankingsList = leaderBoardData.players.flat().map(player => ({
                     name: player.name,
@@ -214,6 +216,11 @@ const Archives = () => {
     };
 
 
+    const formatDate = (timestamp) => {
+        if (!timestamp) return '';
+        const date = new Date(Number(timestamp)); // Ensure the timestamp is a number
+        return isNaN(date) ? 'Invalid Date' : date.toLocaleString(); // Handle invalid date
+      };
 
     return (
         <div className='gamesListContainer'>
@@ -281,9 +288,11 @@ const Archives = () => {
                                     <span className="trainerGameDetailFieldValue">{openedGame.variationName}</span>
                                 </div>
                                 <div className={`DateNTimeContainer ${openedGame.id === previewedGame.id ? '' : 'hidden'}`}>
+                                {startedAt && (
                                     <div className="DateContainer">
-                                        <span className="dateHeading">Date: 12-Mar-2024</span>
+                                        <span className="dateHeading"> {formatDate(startedAt)}</span>
                                     </div>
+                                )}
                                     <div className="TimeContainer">
                                         <span className="timeHeading">Time: 13:24</span>
                                     </div>
@@ -302,6 +311,14 @@ const Archives = () => {
             </div>
 
             <div className={`previewGameRightContainer ${previewedGame.id !== null ? '' : 'hidden'}`}>
+            <div className="boardContainer">
+                    <div className="boardContainerTop">
+                        <h2 className="">BOARD & CONTROLS</h2>
+                    </div>
+                    <div className="boardCard">
+                        <img src={previewImageSrc} alt="" className="boardImg" />
+                    </div>
+                </div>
                 <div className="participantsAndRankings">
                     <div className="participantsContainer">
                         <div className="listTableTopDiv">
@@ -350,14 +367,7 @@ const Archives = () => {
                         </table>
                     </div>
                 </div>
-                <div className="boardContainer">
-                    <div className="boardContainerTop">
-                        <h2 className="">BOARD & CONTROLS</h2>
-                    </div>
-                    <div className="boardCard">
-                        <img src={previewImageSrc} alt="" className="boardImg" />
-                    </div>
-                </div>
+               
             </div>
         </div>
     )

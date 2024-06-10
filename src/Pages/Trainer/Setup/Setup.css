@@ -134,7 +134,11 @@
 }
 
 .participantsContainer {
-    width: 300px;
+    width: 700px;
+}
+
+tbody{
+    align-items: left !important;
 }
 
 .participantsContainer table{

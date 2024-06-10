@@ -135,7 +135,7 @@ const GamesList = ({redirectOngoing}) => {
     });
 
     // Call handlePreviewGame to show preview
-    await handlePreviewGame(game);
+    // await handlePreviewGame(game);
   };
 
   const launchGame = async (gameId: number | null | string) => {
@@ -323,7 +323,7 @@ const GamesList = ({redirectOngoing}) => {
                   Preview Game
                 </button>
                 <button
-                  className="trainerSetupDetailsContainerCardBtn"
+                  className={`trainerSetupDetailsContainerCardBtn ${ previewedGame.id === openedGame.id ? "" : "hidden"}`}
                   onClick={() => launchGame(previewedGame.id)}
                 >
                   Launch Game

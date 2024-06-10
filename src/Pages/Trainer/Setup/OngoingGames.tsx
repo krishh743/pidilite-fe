@@ -56,6 +56,7 @@ const OngoingGames = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
+  const [gameValue, setGameValue] = useState();
   const rowsPerPage = 5;
 
   const fetchGamesList = async () => {
@@ -93,12 +94,62 @@ const OngoingGames = () => {
   }, []);
 
   useEffect(() => {
-    if (gameListData.length > 1) {
+    if (gameListData.length > 0) {
       openGame(gameListData[gameListData.length - 1]);
     }
-  }, [gameListData.length]);
+  }, [gameListData]);
+
+  useEffect(() => {
+    let timeIntervle
+    if (gameValue) {
+    timeIntervle =   setInterval(() => {
+        fetchLeaderBoardData(gameValue);
+      }, 5000);
+    }
+return ()=>{clearInterval(timeIntervle)}
+  }, [gameValue]);
+
+  const fetchLeaderBoardData = async (game) => {
+    try {
+      const leaderBoardResponse = await fetch(
+        `${baseUri}/api/gameplay/${game.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${localStorage.getItem("token")}`,
+            "ngrok-skip-browser-warning": "true",
+          },
+        }
+      );
+      const leaderBoardData = await leaderBoardResponse.json();
+      console.log("leaderBoardData", leaderBoardData);
+      const participants = leaderBoardData.players.flat().map((player) => ({
+        id: player.id,
+        name: player.name,
+        numberOfMoves: player.numberOfMoves,
+        score: player.score,
+      }));
+
+      setParticipantsList(participants);
+
+      // const rankingsList = leaderBoardData.players.flat().map((player) => ({
+      //   name: player.name,
+      //   score: player.score,
+      //   finishedTime: new Date(player.finishedTime).toLocaleString(),
+      // }));
+      // setRankingsList(rankingsList);
+
+      console.log(rankingsList);
+      return leaderBoardData;
+    } catch (error) {
+      console.log("error", error);
+      return [];
+    }
+  };
 
   const openGame = async (game: gameOverview) => {
+    setGameValue(game);
     if (previewedGame?.id !== null) {
       setPreviewedGame({
         id: null,
@@ -113,47 +164,13 @@ const OngoingGames = () => {
       });
     }
 
-    const fetchLeaderBoardData = async () => {
-      try {
-        const leaderBoardResponse = await fetch(
-          `${baseUri}/api/gameplay/${game.id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `${localStorage.getItem("token")}`,
-              "ngrok-skip-browser-warning": "true",
-            },
-          }
-        );
-        const leaderBoardData = await leaderBoardResponse.json();
-        console.log("leaderBoardData", leaderBoardData);
-        const participants = leaderBoardData.players.flat().map((player) => ({
-          id: player.id,
-          name: player.name,
-        }));
-        setParticipantsList(participants);
+    console.log(participantsList, "line119");
 
-        const rankingsList = leaderBoardData.players.flat().map((player) => ({
-          name: player.name,
-          score: player.score,
-          finishedTime: new Date(player.finishedTime).toLocaleString(),
-        }));
-        setRankingsList(rankingsList);
-
-        console.log(rankingsList);
-        return leaderBoardData;
-      } catch (error) {
-        console.log("error", error);
-        return [];
-      }
-    };
-
-    await fetchLeaderBoardData();
+    await fetchLeaderBoardData(game);
 
     console.log(game, "game");
 
-    const bgImageParsedValue = game.additionalDetails.backgroundImage;
+    const bgImageParsedValue = game?.additionalDetails?.backgroundImage;
 
     setOpenedGame({
       id: game?.id,
@@ -169,24 +186,6 @@ const OngoingGames = () => {
 
     // console.log(game?.additionalDetails?.backgroundImage,game?.additionalDetails,game,"line169")
 
-    const image = await fetch(`${baseUri}/download/${bgImageParsedValue}`, {
-      method: "GET",
-      headers: {
-        Authorization: `${localStorage.getItem("token")}`,
-        "ngrok-skip-browser-warning": "true",
-      },
-    });
-
-    const imageBlob = await image.blob();
-    setPreviewImageSrc(URL.createObjectURL(imageBlob));
-
-    console.log(
-      imageBlob,
-      URL.createObjectURL(imageBlob),
-      previewImageSrc,
-      "imageBlob"
-    );
-
     setPreviewedGame({
       id: game?.id,
       variationId: game?.variationId,
@@ -198,6 +197,24 @@ const OngoingGames = () => {
         backgroundImage: game?.additionalDetails?.backgroundImage,
       },
     });
+
+    const image = await fetch(`${baseUri}/download/${bgImageParsedValue}`, {
+      method: "GET",
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
+
+    const imageBlob = await image.blob();
+    setPreviewImageSrc(URL.createObjectURL(imageBlob));
+
+    // console.log(
+    //   imageBlob,
+    //   URL.createObjectURL(imageBlob),
+    //   previewImageSrc,
+    //   "imageBlob"
+    // );
   };
 
   console.log(gameListData, "gameListData");
@@ -212,7 +229,7 @@ const OngoingGames = () => {
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
-
+  console.log(currentData, "currentData");
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
@@ -229,6 +246,22 @@ const OngoingGames = () => {
     };
     return date.toLocaleDateString("en-US", options);
   };
+
+  function handleExtraScore(newScore: number) {
+    const biggerSquares = [
+      2, 6, 12, 16, 21, 25, 28, 33, 38, 41, 45, 48, 51, 58,
+    ];
+    let extraSpace = 0;
+
+    for (let el of biggerSquares) {
+      if (el < newScore) {
+        extraSpace += 1;
+      } else if (el > newScore) {
+        break;
+      }
+    }
+    return newScore - extraSpace;
+  }
 
   return (
     <div className="gamesListContainer">
@@ -296,62 +329,73 @@ const OngoingGames = () => {
           {openedGame?.id === null ? (
             <div className="">No opened Game</div>
           ) : (
-            <div className="trainerSetupDetailsContainerCard">
-              <div className="trainerListTableTopDiv">
-                <h2 className="">DETAILS</h2>
-              </div>
-              <div className="trainerSetupDetailsContainerCardBody">
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation ID
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame?.id}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">Game Type</span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame?.gameType}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation Name
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame?.variationName}
-                  </span>
-                </div>
-                <div
-                  className={`DateNTimeContainer ${
-                    openedGame?.id === previewedGame?.id ? "" : "hidden"
-                  }`}
-                >
-                  <div className="DateContainer">
-                    <span className="dateHeading">
-                      {" "}
-                      Date: {formatDate(currentDate)}
-                    </span>
-                  </div>
-                  <div className="TimeContainer">
-                    <span className="timeHeading">
-                      {openedGame?.startedAt === null
-                        ? "-"
-                        : `${openedGame?.startedAt}`}
-                    </span>
-                  </div>
-                </div>
+            <>
+              {previewedGame.id !== null ? (
+                <>
+                  {" "}
+                  <div className="trainerSetupDetailsContainerCard">
+                    <div className="trainerListTableTopDiv">
+                      <h2 className="">DETAILS</h2>
+                    </div>
+                    <div className="trainerSetupDetailsContainerCardBody">
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Variation ID
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame?.id}
+                        </span>
+                      </div>
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Game Type
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame?.gameType}
+                        </span>
+                      </div>
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Variation Name
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame?.variationName}
+                        </span>
+                      </div>
+                      <div
+                        className={`DateNTimeContainer ${
+                          openedGame?.id === previewedGame?.id ? "" : "hidden"
+                        }`}
+                      >
+                        <div className="DateContainer">
+                          <span className="dateHeading">
+                            {" "}
+                            Date: {formatDate(currentDate)}
+                          </span>
+                        </div>
+                        <div className="TimeContainer">
+                          <span className="timeHeading">
+                            {openedGame?.startedAt === null
+                              ? "-"
+                              : `${openedGame?.startedAt}`}
+                          </span>
+                        </div>
+                      </div>
 
-                <div className="qrContainer">
-                  {previewedGame?.id !== null && (
-                    <QRCode
-                      value={`${appUrl}/game-play/${previewedGame?.url}`}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
+                      <div className="qrContainer">
+                        {previewedGame?.id !== null && (
+                          <QRCode
+                            value={`${appUrl}/game-play/${previewedGame?.url}`}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </div>
       </div>
@@ -361,19 +405,90 @@ const OngoingGames = () => {
           previewedGame.id !== null ? "" : "hidden"
         }`}
       >
-        <div className="boardContainer">
-          <div className="boardContainerTop">
-            <h2 className="">BOARD & CONTROLS</h2>
+        <div
+          className={`previewGameRightContainer ${
+            previewedGame.id !== null ? "" : "hidden"
+          }`}
+        >
+          <div className="boardContainer">
+            <div className="boardContainerTop">
+              <h2 className="">BOARD & CONTROLS</h2>
+            </div>
+            <div className="boardCard">
+              <img src={previewImageSrc} alt="" className="boardImg" />
+            </div>
+            <button
+              className={`fullScreenBtn`}
+              onClick={handleFullScreenSpectateGame}
+            >
+              FULL SCREEN
+            </button>
           </div>
-          <div className="boardCard">
-            <img src={previewImageSrc} alt="" className="boardImg" />
+          <div className="participantsAndRankings">
+            <div className="participantsContainer">
+              <div className="listTableTopDiv">
+                <h2 className="">PARTICIPANTxS</h2>
+              </div>
+              <table>
+                <thead>
+                  <tr className="listTableHeader">
+                    <th>Sno</th>
+                    <th>Rank</th>
+                    <th>NAME</th>
+                    <th>Score</th>
+                    <th>Moves</th>
+                  </tr>
+                </thead>
+                <tbody className="listTableBody">
+                  {participantsList?.map((participant: any, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{index + 1}</td>
+                      <td>{participant.name}</td>
+                      <td>{participant?.score}</td>
+                      <td>{participant?.numberOfMoves}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {/* <div className="rankingsContainer">
+              <div className="listTableTopDiv">
+                <h2 className="">RANKINGS</h2>
+              </div>
+              <table>
+                <thead style={{ textAlign: "center" }}>
+                  <tr
+                    className="listTableHeader"
+                    style={{ textAlign: "center" }}
+                  >
+                    <th>RANK</th>
+                    <th>NAME</th>
+                    <th>SCORE</th>
+                    <th>MOVES</th>
+                  </tr>
+                </thead>
+                <tbody className="listTableBody">
+                  {rankingsList?.map((participant: any, index) => (
+                    <tr key={index}  style={{ textAlign: "center" }}>
+                      <td>{index + 1}</td>
+                      <td>{participant.name}</td>
+                      <td>{handleExtraScore(participant.score)}</td>
+                      <td>{participant.numberOfMoves || "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div> */}
           </div>
-          <button
-            className={`fullScreenBtn`}
-            onClick={handleFullScreenSpectateGame}
-          >
-            FULL SCREEN
-          </button>
+          {/* <div className="boardContainer">
+                    <div className="boardContainerTop">
+                        <h2 className="">BOARD & CONTROLS</h2>
+                    </div>
+                    <div className="boardCard">
+                        <img src={previewImageSrc} alt="" className="boardImg" />
+                    </div>
+                </div> */}
         </div>
       </div>
     </div>
