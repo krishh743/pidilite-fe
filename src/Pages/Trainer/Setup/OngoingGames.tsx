@@ -433,7 +433,7 @@ return ()=>{clearInterval(timeIntervle)}
                 <thead>
                   <tr className="listTableHeader">
                     <th>Sno</th>
-                    <th>Rank</th>
+                    {/* <th>Rank</th> */}
                     <th>NAME</th>
                     <th>Score</th>
                     <th>Moves</th>
@@ -443,7 +443,7 @@ return ()=>{clearInterval(timeIntervle)}
                   {participantsList?.map((participant: any, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{index + 1}</td>
+                      {/* <td>{index + 1}</td> */}
                       <td>{participant.name}</td>
                       <td>{handleExtraScore(participant?.score)}</td>
                       <td>{participant?.numberOfMoves}</td>

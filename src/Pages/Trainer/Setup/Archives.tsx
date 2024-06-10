@@ -89,6 +89,8 @@ const Archives = () => {
             if (score !== prevScore || moves !== prevMoves) {
                 // Assign new rank when either score or moves change
                 entry.rank = rank;
+            }else{
+                entry.rank = data[i - 1].rank
             }
             
             // Update previous score and moves
