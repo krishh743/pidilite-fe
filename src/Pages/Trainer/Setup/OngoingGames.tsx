@@ -445,7 +445,7 @@ return ()=>{clearInterval(timeIntervle)}
                       <td>{index + 1}</td>
                       <td>{index + 1}</td>
                       <td>{participant.name}</td>
-                      <td>{participant?.score}</td>
+                      <td>{handleExtraScore(participant?.score)}</td>
                       <td>{participant?.numberOfMoves}</td>
                     </tr>
                   ))}

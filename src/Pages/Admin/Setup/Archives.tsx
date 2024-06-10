@@ -113,18 +113,20 @@ const Archives = ({ setWindow, window }) => {
         const participants = leaderBoardData.players.flat().map(player => ({
           id: player.id,
           name: player.name,
+          score: player.score,
+          numberOfMoves: player.numberOfMoves
 
         }));
         setParticipantsList(participants)
 
-        const rankingsList = leaderBoardData.players.flat().map(player => ({
-          name: player.name,
-          score: player.score,
-          numberOfMoves: player.numberOfMoves
-        }));
-        setRankingsList(rankingsList)
+        // const rankingsList = leaderBoardData.players.flat().map(player => ({
+        //   name: player.name,
+        //   score: player.score,
+        //   numberOfMoves: player.numberOfMoves
+        // }));
+        // setRankingsList(rankingsList)
 
-        console.log(rankingsList);
+        // console.log(rankingsList);
         return leaderBoardData
       } catch (error) {
         console.log("error", error)
@@ -332,32 +334,39 @@ const Archives = ({ setWindow, window }) => {
           <div className="participantsAndRankings">
             <div className="participantsContainer">
               <div className="listTableTopDiv">
-                <h2 className="">PARTICIPANTxS</h2>
+                <h2 className="">PARTICIPANT</h2>
               </div>
               <table>
                 <thead>
                   <tr className='listTableHeader'>
                     <th>Sno</th>
+                    <th>RANK</th>
                     <th>NAME</th>
+                    <th>SCORE</th>
+                    <th>MOVES</th>
                   </tr>
                 </thead>
                 <tbody className='listTableBody'>
                   {participantsList?.map((participant: any, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td>{index + 1}</td>
                       <td>{participant.name}</td>
+                      <td>{handleExtraScore(participant.score)}</td>
+                      <td>{participant.numberOfMoves}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div className="rankingsContainer">
+            {/* <div className="rankingsContainer">
               <div className="listTableTopDiv">
                 <h2 className="">RANKINGS</h2>
               </div>
               <table>
                 <thead>
                   <tr className='listTableHeader'>
+                    <th>Sno.</th>
                     <th>RANK</th>
                     <th>NAME</th>
                     <th>SCORE</th>
@@ -368,6 +377,7 @@ const Archives = ({ setWindow, window }) => {
                   {rankingsList?.map((participant: any, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
+                      <td>{index + 1}</td>
                       <td>{participant.name}</td>
                       <td>{handleExtraScore(participant.score)}</td>
                       <td>{participant.numberOfMoves}</td>
@@ -375,7 +385,7 @@ const Archives = ({ setWindow, window }) => {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </div> */}
           </div>
           <div className="boardContainer">
             <div className="boardContainerTop">

@@ -30,6 +30,7 @@ interface Player {
 }
 
 interface finishedPlayer {
+    rank: number;
     id: number;
     name: string;
     color: string;
@@ -570,7 +571,32 @@ const Game = () => {
         }
 
         function onGameOverEvent(data) {
-            // console.log('gameOver', data)
+            console.log('gameOver data ---->', data)
+
+            function denseRank(data) {
+                let rank = 1;
+                let prevScore = null;
+                let prevMoves = null;
+            
+                for (let i = 0; i < data.length; i++) {
+                    const entry = data[i];
+                    const score = entry.score;
+                    const moves = entry.numberOfMoves;
+            
+                    if (score !== prevScore || moves !== prevMoves) {
+                        // Assign new rank when either score or moves change
+                        entry.rank = rank;
+                    }
+                    
+                    // Update previous score and moves
+                    prevScore = score;
+                    prevMoves = moves;
+                    
+                    rank++;
+                }
+            }
+
+            denseRank(data)
 
             const transformedData: finishedPlayer[] = data.map((player: any) => ({
                 id: player.id,
@@ -579,8 +605,13 @@ const Game = () => {
                 numberOfMoves: player.numberOfMoves,
                 score: player.score,
                 finishedTime: player.finishedTime,
-                numberOfDevices: player.numberOfDevices
+                numberOfDevices: player.numberOfDevices,
+                rank: player.rank
+                
             }));
+            
+
+            console.log('data--->', data)
 
             setPreviewLeaderboard(transformedData);
             setOpenLeaderboardPopup(true)
@@ -1066,6 +1097,7 @@ const Game = () => {
                                     <div className="boardUserProfileSVGContainerForLeaderboard">
                                         <MySVGComponent color={player.color} />
                                     </div>
+                                    <p>Rank: {player.rank}</p>
                                     <p>Name: {player.name}</p>
                                     <p>Score: {handleExtraScore(player.score)}</p>
                                     <p>Moves: {player.numberOfMoves}</p>

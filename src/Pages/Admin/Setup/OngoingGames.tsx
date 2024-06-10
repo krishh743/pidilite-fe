@@ -205,6 +205,23 @@ const OngoingGames = ({ setWindow, window }) => {
         navigate(`/game-spectate/${gameId}`);
     }
 
+    
+  function handleExtraScore(newScore: number) {
+    const biggerSquares = [
+      2, 6, 12, 16, 21, 25, 28, 33, 38, 41, 45, 48, 51, 58,
+    ];
+    let extraSpace = 0;
+
+    for (let el of biggerSquares) {
+      if (el < newScore) {
+        extraSpace += 1;
+      } else if (el > newScore) {
+        break;
+      }
+    }
+    return newScore - extraSpace;
+  }
+
     return (
 
         <div className='adminGamesListContainer'>

@@ -76,6 +76,29 @@ const Archives = () => {
         fetchGamesList();
     }, [])
 
+    function denseRank(data) {
+        let rank = 1;
+        let prevScore = null;
+        let prevMoves = null;
+    
+        for (let i = 0; i < data.length; i++) {
+            const entry = data[i];
+            const score = entry.score;
+            const moves = entry.moves;
+    
+            if (score !== prevScore || moves !== prevMoves) {
+                // Assign new rank when either score or moves change
+                entry.rank = rank;
+            }
+            
+            // Update previous score and moves
+            prevScore = score;
+            prevMoves = moves;
+            
+            rank++;
+        }
+    }
+
     const openGame = (game: gameOverview) => {
         if (previewedGame.id !== null) {
             setPreviewedGame({
@@ -102,22 +125,27 @@ const Archives = () => {
                 })
                 const leaderBoardData = await leaderBoardResponse.json()
                 console.log("lleaderBoardData", leaderBoardData)
-                const participants = leaderBoardData.players.flat().map(player => ({
+                let leaderboardArr = leaderBoardData.players.flat()
+                denseRank(leaderboardArr)
+                const participants = leaderboardArr.map(player => ({
                     id: player.id,
+                    rank: player.rank,
                     name: player.name,
+                    score: player.score,
+                    numberOfMoves: player.numberOfMoves
 
                 }));
                 setParticipantsList(participants)
                 setStartedAt(leaderBoardData.startedAt);
 
-                const rankingsList = leaderBoardData.players.flat().map(player => ({
-                    name: player.name,
-                    score: player.score,
-                    numberOfMoves: player.numberOfMoves
-                }));
-                setRankingsList(rankingsList)
+                // const rankingsList = leaderBoardData.players.flat().map(player => ({
+                //     name: player.name,
+                //     score: player.score,
+                //     numberOfMoves: player.numberOfMoves
+                // }));
+                // setRankingsList(rankingsList)
 
-                console.log(rankingsList);
+                // console.log(rankingsList);
                 return leaderBoardData
             } catch (error) {
                 console.log("error", error)
@@ -328,20 +356,26 @@ const Archives = () => {
                             <thead>
                                 <tr className='listTableHeader'>
                                     <th>Sno</th>
+                                    <th>RANK</th>
                                     <th>NAME</th>
+                                    <th>SCORE</th>
+                                    <th>MOVES</th>
                                 </tr>
                             </thead>
                             <tbody className='listTableBody'>
                                 {participantsList?.map((participant: any, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
+                                        <td>{participant.rank}</td>
                                         <td>{participant.name}</td>
+                                        <td>{handleExtraScore(participant.score)}</td>
+                                        <td>{participant.numberOfMoves}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <div className="rankingsContainer">
+                    {/* <div className="rankingsContainer">
                         <div className="listTableTopDiv">
                             <h2 className="">RANKINGS</h2>
                         </div>
@@ -365,7 +399,7 @@ const Archives = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
+                    </div> */}
                 </div>
                
             </div>
