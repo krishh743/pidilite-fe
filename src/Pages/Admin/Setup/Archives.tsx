@@ -66,7 +66,8 @@ const Archives = ({ setWindow, window }) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${localStorage.getItem('token')}`
+          'Authorization': `${localStorage.getItem('token')}`,
+          'ngrok-skip-browser-warning':'true'
         },
       })
 
@@ -103,7 +104,8 @@ const Archives = ({ setWindow, window }) => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${localStorage.getItem('token')}`
+            'Authorization': `${localStorage.getItem('token')}`,
+            'ngrok-skip-browser-warning':'true'
           },
         })
         const leaderBoardData = await leaderBoardResponse.json()
@@ -183,7 +185,8 @@ const Archives = ({ setWindow, window }) => {
     const image = await fetch(`${baseUri}/download/${game.additionalDetails.backgroundImage}`, {
       method: 'GET',
       headers: {
-        'Authorization': `${localStorage.getItem('token')}`
+        'Authorization': `${localStorage.getItem('token')}`,
+        'ngrok-skip-browser-warning':'true'
       },
     })
 

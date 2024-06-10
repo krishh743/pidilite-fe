@@ -54,11 +54,9 @@ const OngoingGames = () => {
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
 
-
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
-
 
   const fetchGamesList = async () => {
     try {
@@ -69,13 +67,14 @@ const OngoingGames = () => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `${localStorage.getItem("token")}`,
+            "ngrok-skip-browser-warning": "true",
           },
         }
       );
 
       const ongoingGamesListResdata = await ongoingGamesResponse.json();
       console.log("gamelistResponse", ongoingGamesListResdata);
-      setGameListData(ongoingGamesListResdata[0]);
+      setGameListData(ongoingGamesListResdata);
     } catch (error) {
       console.log(error);
     }
@@ -90,12 +89,10 @@ const OngoingGames = () => {
       setCurrentDate(new Date());
     }, 1000); // Update every second
 
-    return () => clearInterval(intervalId); 
+    return () => clearInterval(intervalId);
   }, []);
 
-
   useEffect(() => {
-
     if (gameListData.length > 1) {
       openGame(gameListData[gameListData.length - 1]);
     }
@@ -125,6 +122,7 @@ const OngoingGames = () => {
             headers: {
               "Content-Type": "application/json",
               Authorization: `${localStorage.getItem("token")}`,
+              "ngrok-skip-browser-warning": "true",
             },
           }
         );
@@ -155,7 +153,7 @@ const OngoingGames = () => {
 
     console.log(game, "game");
 
-    const bgImageParsedValue = JSON.parse(game.additionalDetails).backgroundImage
+    const bgImageParsedValue = game.additionalDetails.backgroundImage;
 
     setOpenedGame({
       id: game?.id,
@@ -171,21 +169,23 @@ const OngoingGames = () => {
 
     // console.log(game?.additionalDetails?.backgroundImage,game?.additionalDetails,game,"line169")
 
-    const image = await fetch(
-      `${baseUri}/download/${bgImageParsedValue}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const image = await fetch(`${baseUri}/download/${bgImageParsedValue}`, {
+      method: "GET",
+      headers: {
+        Authorization: `${localStorage.getItem("token")}`,
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
 
     const imageBlob = await image.blob();
     setPreviewImageSrc(URL.createObjectURL(imageBlob));
 
-    console.log(imageBlob,URL.createObjectURL(imageBlob),previewImageSrc,"imageBlob")
-
+    console.log(
+      imageBlob,
+      URL.createObjectURL(imageBlob),
+      previewImageSrc,
+      "imageBlob"
+    );
 
     setPreviewedGame({
       id: game?.id,
@@ -284,7 +284,10 @@ const OngoingGames = () => {
             <span>
               Page {currentPage} of {totalPages}
             </span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
               Next
             </button>
           </div>
@@ -326,7 +329,10 @@ const OngoingGames = () => {
                   }`}
                 >
                   <div className="DateContainer">
-                    <span className="dateHeading">  Date: {formatDate(currentDate)}</span>
+                    <span className="dateHeading">
+                      {" "}
+                      Date: {formatDate(currentDate)}
+                    </span>
                   </div>
                   <div className="TimeContainer">
                     <span className="timeHeading">

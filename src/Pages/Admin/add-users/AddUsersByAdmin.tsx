@@ -3,19 +3,16 @@ import logo from "../../../Assets/Images/pidlite-logo.png";
 import ham from "../../../Assets/Images/ham.png";
 import irm from "../../../Assets/Images/IRMLogo.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./AddUserByAdmin.css"
+import "./AddUserByAdmin.css";
 import PopupForm from "./PopupForm";
 import openeye from "../../../Assets/Images/openeye.png";
-import searchIcon from "../../../Assets/Images/searchIcon.png";
-import filterIcon from "../../../Assets/Images/filterIcon.png";
-
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AddUsersByAdmin() {
   const location = useLocation();
-  const baseUri = process.env.REACT_APP_BASE_URL
-  const navigate=useNavigate()
+  const baseUri = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
 
   const [gameListData, setGameListData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -23,32 +20,29 @@ function AddUsersByAdmin() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const ongoingGamesResponse = await fetch(
-          `${baseUri}/api/trainer`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `${localStorage.getItem('token')}`,
-            },
-          }
-        );
+        const ongoingGamesResponse = await fetch(`${baseUri}/api/trainer`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `${localStorage.getItem("token")}`,
+            'ngrok-skip-browser-warning':'true'
+          },
+        });
 
         const data = await ongoingGamesResponse.json();
         setGameListData(data);
       } catch (error) {
-        console.error('Error fetching game list:', error);
+        console.error("Error fetching game list:", error);
       }
     };
 
     fetchGames();
   }, []);
 
-  console.log(gameListData,"gameListData")
+  console.log(gameListData, "gameListData");
 
   const openGame = (game) => {
-    // Define what happens when you click on the open eye icon
-    console.log('Open game:', game);
+    console.log("Open game:", game);
   };
 
   const handleOpenNewGameForm = () => {
@@ -62,36 +56,36 @@ function AddUsersByAdmin() {
   const handleFormSubmit = async (formData) => {
     try {
       const response = await fetch(`${baseUri}/api/trainer`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${localStorage.getItem('token')}`,
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const newUser = await response.json();
       setGameListData([...gameListData, newUser]);
+      toast.success("User created successfully!");
+      handleClosePopup();
     } catch (error) {
-      console.error('Error creating new user:', error);
+      console.error("Error creating new user:", error);
+      toast.error("Error creating new user.");
     }
   };
-
 
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
-
-
-
   return (
     <div className="setupMain">
+      <ToastContainer />
       <div className="nav">
         <div className="companyLogos">
           <img src={irm} alt="" className="irm" />
@@ -105,7 +99,6 @@ function AddUsersByAdmin() {
 
       <div className="setupPageContent">
         <div className="setupSideBar">
-          {/* <a href="/add-users" className="setupSideBarItem">Add Users</a> */}
           <a
             href="/admin-add-user"
             className={`setupSideBarItem ${
@@ -134,52 +127,46 @@ function AddUsersByAdmin() {
         </div>
 
         <div className="admin-add-user">
-
-           <div className="listContainer">
-            {/* <h2>Add User</h2> */}
-      {/* <div className="listTableTopDiv">
-        <h2>LIST</h2>
-        <div className="searchAndFilterIcons">
-          <img src={searchIcon} alt="Search Icon" className='searchIcon' />
-          <img src={filterIcon} alt="Filter Icon" className='filterIcon' />
-        </div>
-      </div> */}
-      
-      <table className='adminListTable'>
-        <thead>
-          <tr className='listTableHeader'>
-            <th>Sno</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>User Type</th>
-            <th>View</th>
-            {/* <th>Duplicate</th> */}
-          </tr>
-        </thead>
-        <tbody className='listTableBody'>
-          {gameListData.map((users, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{users?.name}</td>
-              <td>{users.phoneNumber}</td>
-              <td>{users.type}</td>
-              <td className='viewColumn'>
-                <img className='openEye' onClick={() => openGame(users)} src={openeye} alt='open eye' />
-              </td>
-              {/* <td>
-                <button className='duplicateBtn'>Duplicate</button>
-              </td> */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button className='addGameBtn' onClick={handleOpenNewGameForm}>Add user</button>
-      {showPopup && (
-        <PopupForm onClose={handleClosePopup} onSubmit={handleFormSubmit} />
-      )}
-    </div>
-
-           
+          <div className="listContainer">
+            <table className="adminListTable">
+              <thead>
+                <tr className="listTableHeader">
+                  <th>Sno</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>User Type</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody className="listTableBody">
+                {gameListData.map((users, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{users?.name}</td>
+                    <td>{users.phoneNumber}</td>
+                    <td>{users.type}</td>
+                    <td className="viewColumn">
+                      <img
+                        className="openEye"
+                        onClick={() => openGame(users)}
+                        src={openeye}
+                        alt="open eye"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="addGameBtn" onClick={handleOpenNewGameForm}>
+              Add user
+            </button>
+            {showPopup && (
+              <PopupForm
+                onClose={handleClosePopup}
+                onSubmit={handleFormSubmit}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

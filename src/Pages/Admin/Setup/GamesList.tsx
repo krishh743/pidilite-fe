@@ -88,7 +88,8 @@ const GamesList = ({setWindow, window}) => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
             })
 
@@ -170,7 +171,8 @@ const GamesList = ({setWindow, window}) => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
                 body: JSON.stringify(data)
             })
@@ -299,7 +301,8 @@ const GamesList = ({setWindow, window}) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
                 body: JSON.stringify({
                     gameType: openedGame.gameType,
@@ -426,7 +429,8 @@ const GamesList = ({setWindow, window}) => {
             const uploadImage = await fetch(`${baseUri}/upload/info`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
                 body: formData
             })
@@ -496,7 +500,8 @@ const GamesList = ({setWindow, window}) => {
             const image = await fetch(`${baseUri}/download/${imageUrl}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
             })
 
@@ -719,7 +724,7 @@ const GamesList = ({setWindow, window}) => {
                                                     uploadIcon='Upload'
                                                     deleteIcon=''
                                                     onFileAdded={(img) => handleSelectImage(img, 'additionalDetails.backgroundImage')}
-                                                    onFileRemoved={(img) => runAfterImageDelete(img)}
+                                                    onFileRemoved={(img) => runAfterImageDelete(img)}   
                                                 />
                                             </button>
                                             <div className="PreviewAndDeleteBtns">

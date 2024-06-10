@@ -58,13 +58,14 @@ const Archives = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+                    'Authorization': `${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning':'true'
                 },
             })
 
             const archivedGamesListResdata = await archivedGamesResponse.json();
             console.log("gamelistResponse", archivedGamesListResdata);
-            setGameListData(archivedGamesListResdata[0]);
+            setGameListData(archivedGamesListResdata);
         } catch (error) {
             console.log(error)
         }
@@ -94,7 +95,8 @@ const Archives = () => {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `${localStorage.getItem('token')}`
+                        'Authorization': `${localStorage.getItem('token')}`,
+                        'ngrok-skip-browser-warning':'true'
                     },
                 })
                 const leaderBoardData = await leaderBoardResponse.json()
@@ -175,7 +177,8 @@ const Archives = () => {
         const image = await fetch(`${baseUri}/download/${bgImageForUrl }`, {
             method: 'GET',
             headers: {
-                'Authorization': `${localStorage.getItem('token')}`
+                'Authorization': `${localStorage.getItem('token')}`,
+                'ngrok-skip-browser-warning':'true'
             },
         })
 
@@ -235,13 +238,13 @@ const Archives = () => {
                             </tr>
                         </thead>
                         <tbody className='listTableBody'>
-                            {gameListData && gameListData?.map((game: gameOverview, index) => (
+                            { gameListData.map((game: gameOverview, index) => (
                                 <tr key={index}>
                                     <td>{index + 1}</td>
-                                    <td>{game.gameType}</td>
-                                    <td>{game.variationName}</td>
+                                    <td>{game?.gameType}</td>
+                                    <td>{game?.variationName}</td>
                                     <td>{game?.name}</td>
-                                    <td>{game.id}</td>
+                                    <td>{game?.id}</td>
                                     <td className='viewColumn'>
                                         <img
                                         style={{cursor:"pointer"}}

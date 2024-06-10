@@ -55,6 +55,7 @@ const GamesList = ({redirectOngoing}) => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `${localStorage.getItem("token")}`,
+            'ngrok-skip-browser-warning':'true'
           },
         });
 
@@ -100,6 +101,7 @@ const GamesList = ({redirectOngoing}) => {
             headers: {
               "Content-Type": "application/json",
               Authorization: `${localStorage.getItem("token")}`,
+              'ngrok-skip-browser-warning':'true'
             },
           }
         );
@@ -146,6 +148,7 @@ const GamesList = ({redirectOngoing}) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${localStorage.getItem("token")}`,
+          'ngrok-skip-browser-warning':'true'
         },
         body: JSON.stringify({
           variationId: gameId,
@@ -172,6 +175,7 @@ const GamesList = ({redirectOngoing}) => {
         method: "GET",
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
+          'ngrok-skip-browser-warning':'true'
         },
       }
     );    
