@@ -6,12 +6,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./AddUserByAdmin.css"
 import PopupForm from "./PopupForm";
 import openeye from "../../../Assets/Images/openeye.png";
+import searchIcon from "../../../Assets/Images/searchIcon.png";
+import filterIcon from "../../../Assets/Images/filterIcon.png";
+
 
 
 
 function AddUsersByAdmin() {
   const location = useLocation();
   const baseUri = process.env.REACT_APP_BASE_URL
+  const navigate=useNavigate()
 
   const [gameListData, setGameListData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
@@ -20,7 +24,7 @@ function AddUsersByAdmin() {
     const fetchGames = async () => {
       try {
         const ongoingGamesResponse = await fetch(
-          `${baseUri}/api/gameplay?status=1&status=2&status=3`,
+          `${baseUri}/api/trainer`,
           {
             method: 'GET',
             headers: {
@@ -39,6 +43,8 @@ function AddUsersByAdmin() {
 
     fetchGames();
   }, []);
+
+  console.log(gameListData,"gameListData")
 
   const openGame = (game) => {
     // Define what happens when you click on the open eye icon
@@ -112,7 +118,7 @@ function AddUsersByAdmin() {
             Training Games
           </a>
           <a
-            href="/setup"
+            href="/admin-setup"
             className={`setupSideBarItem ${
               location.pathname === "/setup" ? "activeSidebarLink" : ""
             }`}
@@ -130,33 +136,35 @@ function AddUsersByAdmin() {
         <div className="admin-add-user">
 
            <div className="listContainer">
-      <div className="listTableTopDiv">
+            {/* <h2>Add User</h2> */}
+      {/* <div className="listTableTopDiv">
         <h2>LIST</h2>
         <div className="searchAndFilterIcons">
-          {/* <img src={searchIcon} alt="Search Icon" className='searchIcon' />
-          <img src={filterIcon} alt="Filter Icon" className='filterIcon' /> */}
+          <img src={searchIcon} alt="Search Icon" className='searchIcon' />
+          <img src={filterIcon} alt="Filter Icon" className='filterIcon' />
         </div>
-      </div>
+      </div> */}
+      
       <table className='adminListTable'>
         <thead>
           <tr className='listTableHeader'>
             <th>Sno</th>
-            <th>Game Type</th>
-            <th>Variation Name</th>
-            <th>Banner</th>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>User Type</th>
             <th>View</th>
-            <th>Duplicate</th>
+            {/* <th>Duplicate</th> */}
           </tr>
         </thead>
         <tbody className='listTableBody'>
-          {gameListData.map((game, index) => (
+          {gameListData.map((users, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{game.gameType}</td>
-              <td>{game.variationName}</td>
-              <td>{game.banner}</td>
+              <td>{users?.name}</td>
+              <td>{users.phoneNumber}</td>
+              <td>{users.type}</td>
               <td className='viewColumn'>
-                <img className='openEye' onClick={() => openGame(game)} src={openeye} alt='open eye' />
+                <img className='openEye' onClick={() => openGame(users)} src={openeye} alt='open eye' />
               </td>
               {/* <td>
                 <button className='duplicateBtn'>Duplicate</button>

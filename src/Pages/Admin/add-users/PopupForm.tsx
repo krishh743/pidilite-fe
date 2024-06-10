@@ -21,16 +21,16 @@ const PopupForm = ({ onClose, onSubmit }) => {
     onClose();
   };
 
-  const fillDummyData = () => {
-    setFormData({
-      name: 'John Doe',
-      phoneNumber: '1234567890',
-      password: 'password123',
-      uniqueId: 'unique-123',
-      type: '1',
-      status: '1'
-    });
-  };
+  // const fillDummyData = () => {
+  //   setFormData({
+  //     name: 'John Doe',
+  //     phoneNumber: '1234567890',
+  //     password: 'password123',
+  //     uniqueId: 'unique-123',
+  //     type: '1',
+  //     status: '1'
+  //   });
+  // };
 
   return (
     <div className="popupForm">
@@ -60,7 +60,7 @@ const PopupForm = ({ onClose, onSubmit }) => {
           <label>Status:</label>
           <input type="number" name="status" value={formData.status} onChange={handleChange} required />
 
-          <button type="button" onClick={fillDummyData}>Fill Dummy Data</button>
+          {/* <button type="button" onClick={fillDummyData}>Fill Dummy Data</button> */}
           <button type="submit">Submit</button>
         </form>
       </div>
