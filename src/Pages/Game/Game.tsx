@@ -697,7 +697,7 @@ const Game = () => {
                 }, 1000);
                 //
 
-            }, 3000); // 3 seconds delay
+            }, 5000); // 3 seconds delay
 
             if (data.currentPosition === 64) {
                 toast(`${data.message}`, {

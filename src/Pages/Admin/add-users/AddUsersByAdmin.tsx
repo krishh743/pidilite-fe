@@ -8,6 +8,7 @@ import PopupForm from "./PopupForm";
 import openeye from "../../../Assets/Images/openeye.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ConfirmDeleteDialog from "./ConfirmationBox";
 
 function AddUsersByAdmin() {
   const location = useLocation();
@@ -16,6 +17,8 @@ function AddUsersByAdmin() {
 
   const [gameListData, setGameListData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -24,8 +27,8 @@ function AddUsersByAdmin() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            'Authorization': `${localStorage.getItem("token")}`,
-            'ngrok-skip-browser-warning':'true'
+            Authorization: `${localStorage.getItem("token")}`,
+            "ngrok-skip-browser-warning": "true",
           },
         });
 
@@ -76,6 +79,38 @@ function AddUsersByAdmin() {
       console.error("Error creating new user:", error);
       toast.error("Error creating new user.");
     }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      const response = await fetch(`${baseUri}/api/trainer/${selectedUserId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      setGameListData(gameListData.filter(user => user.id !== selectedUserId));
+      toast.error("User deleted successfully!");
+      setShowConfirmDelete(false);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      toast.error("Error while deleting user.");
+    }
+  };
+
+  const handleOpenConfirmDelete = (userId) => {
+    setSelectedUserId(userId);
+    setShowConfirmDelete(true);
+  };
+
+  const handleCloseConfirmDelete = () => {
+    setShowConfirmDelete(false);
   };
 
   const handleLogout = () => {
@@ -136,6 +171,7 @@ function AddUsersByAdmin() {
                   <th>Phone Number</th>
                   <th>User Type</th>
                   <th>View</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody className="listTableBody">
@@ -153,6 +189,20 @@ function AddUsersByAdmin() {
                         alt="open eye"
                       />
                     </td>
+                    <td>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 16 16"
+                        className="Delete-user"
+                        onClick={() => handleOpenConfirmDelete(users?.id)}
+                      >
+                        <path d="M 6.496094 1 C 5.675781 1 5 1.675781 5 2.496094 L 5 3 L 2 3 L 2 4 L 3 4 L 3 12.5 C 3 13.328125 3.671875 14 4.5 14 L 10.5 14 C 11.328125 14 12 13.328125 12 12.5 L 12 4 L 13 4 L 13 3 L 10 3 L 10 2.496094 C 10 1.675781 9.324219 1 8.503906 1 Z M 6.496094 2 L 8.503906 2 C 8.785156 2 9 2.214844 9 2.496094 L 9 3 L 6 3 L 6 2.496094 C 6 2.214844 6.214844 2 6.496094 2 Z M 5 5 L 6 5 L 6 12 L 5 12 Z M 7 5 L 8 5 L 8 12 L 7 12 Z M 9 5 L 10 5 L 10 12 L 9 12 Z"></path>
+                      </svg>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -164,6 +214,12 @@ function AddUsersByAdmin() {
               <PopupForm
                 onClose={handleClosePopup}
                 onSubmit={handleFormSubmit}
+              />
+            )}
+            {showConfirmDelete && (
+              <ConfirmDeleteDialog
+                onClose={handleCloseConfirmDelete}
+                onDelete={handleDeleteUser}
               />
             )}
           </div>

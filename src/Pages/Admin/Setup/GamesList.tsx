@@ -543,6 +543,7 @@ const GamesList = ({setWindow, window}) => {
     }
 
 
+    
     return (
         <div className='adminGamesListMain'>
             <Popup open={openPopup} onClose={handleClosePopup} position="right center">
@@ -578,10 +579,10 @@ const GamesList = ({setWindow, window}) => {
                         <button className={`${window === 'archives' ? 'openedWindow' :''}`} onClick={ () => handleChangeTab('archives')}>Archives</button>
                     </div>
                     <div className="basicDetailsHeaderBtns">
-                        <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button>
-                        <button className="" onClick={handleSave}>SAVE</button>
-                        <button className="" onClick={handleCancelGameDetailsUpdates}>CANCEL</button>
-                        <button className="">ARCHIVE</button>
+                        {/* <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button> */}
+                        <button className="saveButton"  onClick={handleSave}>SAVE</button>
+                        <button className="saveButton cancel"  onClick={handleCancelGameDetailsUpdates}>CANCEL</button>
+                        {/* <button className=""  >ARCHIVE</button> */}
                     </div>
                 </div>
 
@@ -653,7 +654,9 @@ const GamesList = ({setWindow, window}) => {
                         <input type="text" className="" value={openedGame.variationName} onChange={handleVariationNameInputChange} ></input> */}
                                     </div>
                                     <div className="SiteBannerContainer">
-                                        <span className="">Add Site Banner<br />(xx px by YY px)</span>
+                                        {/* <span className="">Add Site Banner<br />(xx px by YY px)</span> */}
+                                        <span className="">Add Site Banner<br />(1280 px by 150 px)</span>
+
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -667,7 +670,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.siteBanner !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.siteBanner)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -686,12 +689,12 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.productImage !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.productImage)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="MobileBannerContainer">
-                                        <span className="">Add Mobile Banner<br />(xx px by YY px)</span>
+                                        <span className="">Add Mobile Banner<br />(375 px by 181 px)</span>
                                         <div className="MobileBannerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -704,7 +707,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.mobileBanner !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.mobileBanner)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -716,7 +719,7 @@ const GamesList = ({setWindow, window}) => {
                                 </div>
                                 <div className="additionalDetailsPanel">
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Add Board Background Image<br />(xx px by YY px)</span>
+                                        <span className="">Add Board Background Image<br />(1174 px by 790 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -729,7 +732,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.backgroundImage !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.backgroundImage)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -737,7 +740,7 @@ const GamesList = ({setWindow, window}) => {
 
 
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Add Trainer Background Image<br />(xx px by YY px)</span>
+                                        <span className="">Add Trainer Background Image<br />(1280 px by 720 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -750,7 +753,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.trainerBackgroundImage !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.trainerBackgroundImage)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -759,7 +762,7 @@ const GamesList = ({setWindow, window}) => {
 
 
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Add Player Background Image<br />(xx px by YY px)</span>
+                                        <span className="">Add Player Background Image<br />(750 px by 1280 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -772,7 +775,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.playerBackgroundImage !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.playerBackgroundImage)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -794,7 +797,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img2 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img2)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -812,7 +815,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img6 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img6)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -830,7 +833,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img12 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img12)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -848,7 +851,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img16 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img16)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -866,7 +869,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img21 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img21)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -884,7 +887,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img25 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img25)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -902,7 +905,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img28 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img28)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -920,7 +923,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img33 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img33)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -938,7 +941,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img38 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img38)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -956,7 +959,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img41 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img41)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -974,7 +977,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img45 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img45)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -992,7 +995,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img48 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img48)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -1010,7 +1013,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img51 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img51)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -1028,7 +1031,7 @@ const GamesList = ({setWindow, window}) => {
                                             </button>
                                             <div className="PreviewAndDeleteBtns">
                                                 <button className={`previewBtn ${openedGame.additionalDetails.img58 !== "" ? 'previewBtnActive' : ''}`} onClick={() => handlePreviewImage(openedGame.additionalDetails.img58)}>Preview</button>
-                                                <button className="deleteBtn">Delete</button>
+                                                {/* <button className="deleteBtn">Delete</button> */}
                                             </div>
                                         </div>
                                     </div>

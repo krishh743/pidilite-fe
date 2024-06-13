@@ -112,6 +112,7 @@ const Archives = () => {
 
                 const rankingsList = leaderBoardData.players.flat().map(player => ({
                     name: player.name,
+                    phoneNumber:player?.phoneNumber,
                     score: player.score,
                     numberOfMoves: player.numberOfMoves
                 }));
@@ -320,7 +321,7 @@ const Archives = () => {
                     </div>
                 </div>
                 <div className="participantsAndRankings">
-                    <div className="participantsContainer">
+                    {/* <div className="participantsContainer">
                         <div className="listTableTopDiv">
                             <h2 className="">PARTICIPANTxS</h2>
                         </div>
@@ -340,7 +341,7 @@ const Archives = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </div>
+                    </div> */}
                     <div className="rankingsContainer">
                         <div className="listTableTopDiv">
                             <h2 className="">RANKINGS</h2>
@@ -348,8 +349,10 @@ const Archives = () => {
                         <table>
                             <thead>
                                 <tr className='listTableHeader'>
+                                    <th>Sno</th>
                                     <th>RANK</th>
                                     <th>NAME</th>
+                                    <th>Phone Number</th>
                                     <th>SCORE</th>
                                     <th>MOVES</th>
                                 </tr>
@@ -358,7 +361,9 @@ const Archives = () => {
                                 {rankingsList?.map((participant: any, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
+                                        <td>{index + 1}</td>
                                         <td>{participant.name}</td>
+                                        <td>{participant.phoneNumber}</td>
                                         <td>{handleExtraScore(participant.score)}</td>
                                         <td>{participant.numberOfMoves}</td>
                                     </tr>

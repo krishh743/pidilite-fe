@@ -14,7 +14,7 @@ interface GameOverview {
   };
 }
 
-const GamesList = ({redirectOngoing}) => {
+const GamesList = ({ redirectOngoing }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const appUrl = process.env.REACT_APP_WEBSITE_URL;
@@ -45,17 +45,21 @@ const GamesList = ({redirectOngoing}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
   // const [window, setWindow] = React.useState('gongoing-games')
 
   useEffect(() => {
     const fetchGamesList = async () => {
+      setIsLoading(true);
       try {
         const gamelistResponse = await fetch(`${baseUri}/api/variation/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `${localStorage.getItem("token")}`,
-            'ngrok-skip-browser-warning':'true'
+            "ngrok-skip-browser-warning": "true",
           },
         });
 
@@ -63,13 +67,13 @@ const GamesList = ({redirectOngoing}) => {
         setGameListData(gamesListResdata);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(true);
       }
     };
 
     fetchGamesList();
   }, []);
-
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -80,6 +84,7 @@ const GamesList = ({redirectOngoing}) => {
   }, []);
 
   const openGame = async (game: GameOverview) => {
+    handlePreviewGame(game);
     setGameId(null); // Reset QR
     if (previewedGame.id !== null) {
       setPreviewedGame({
@@ -101,7 +106,7 @@ const GamesList = ({redirectOngoing}) => {
             headers: {
               "Content-Type": "application/json",
               Authorization: `${localStorage.getItem("token")}`,
-              'ngrok-skip-browser-warning':'true'
+              "ngrok-skip-browser-warning": "true",
             },
           }
         );
@@ -141,14 +146,14 @@ const GamesList = ({redirectOngoing}) => {
   const launchGame = async (gameId: number | null | string) => {
     setIsLoading(true);
     //  setWindow('ongoing-games')
-    redirectOngoing('ongoing-games')
+    redirectOngoing("ongoing-games");
     try {
       const launchResponse = await fetch(`${baseUri}/api/gameplay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `${localStorage.getItem("token")}`,
-          'ngrok-skip-browser-warning':'true'
+          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify({
           variationId: gameId,
@@ -158,14 +163,10 @@ const GamesList = ({redirectOngoing}) => {
       const launchResData = await launchResponse.json();
       setIsLoading(false);
       setGameId(launchResData.url);
-
-    
-
     } catch (error) {
       alert(error);
       setIsLoading(false);
     }
-
   };
 
   const handlePreviewGame = async (game: GameOverview) => {
@@ -175,10 +176,10 @@ const GamesList = ({redirectOngoing}) => {
         method: "GET",
         headers: {
           Authorization: `${localStorage.getItem("token")}`,
-          'ngrok-skip-browser-warning':'true'
+          "ngrok-skip-browser-warning": "true",
         },
       }
-    );    
+    );
 
     const imageBlob = await image.blob();
     setPreviewImageSrc(URL.createObjectURL(imageBlob));
@@ -218,143 +219,199 @@ const GamesList = ({redirectOngoing}) => {
     return date.toLocaleTimeString("en-US", options);
   };
 
+  const totalPages = Math.ceil(gameListData.length / rowsPerPage);
+  const currentData = gameListData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+  // console.log(currentData, "currentData");
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+
   return (
-    <div className="gamesListContainer">
-      <div
-        className={`listAndDetailsContainer ${
-          previewedGame.id !== null ? "listAndDetailsContainerColumn" : ""
-        }`}
-      >
-        <div className="trainerSetupListContainer">
-          <div className="listTableTopDiv">
-            <h2 className="">LIST</h2>
-            <div className="searchAndFilterIcons">
-              {/* Search and filter icons */}
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr className="listTableHeader">
-                <th>Sno</th>
-                <th>Type</th>
-                <th>Variation Name</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody className="listTableBody">
-              {gameListData?.map((game: GameOverview, index) => (
-                <tr key={index}>
-                  <td>{game.id}</td>
-                  <td>{game.gameType}</td>
-                  <td>{game.variationName}</td>
-                  <td className="viewColumn">
-                    <img
-                      style={{ cursor: "pointer" }}
-                      className="openEye"
-                      onClick={() => openGame(game)}
-                      src={openeye}
-                      alt="openeye"
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className="trainerSetupDetailsContainer">
-          {openedGame.id === null ? (
-            <div className="">No opened Game</div>
-          ) : (
-            <div className="trainerSetupDetailsContainerCard">
-              <div className="trainerListTableTopDiv">
-                <h2 className="">DETAILS</h2>
-              </div>
-              <div className="trainerSetupDetailsContainerCardBody">
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation ID
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.id}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">Game Type</span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.gameType}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation Name
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.variationName}
-                  </span>
-                </div>
-                <div
-                  className={`DateNTimeContainer ${
-                    openedGame.id === previewedGame.id ? "" : "hidden"
-                  }`}
-                >
-                  <div className="DateContainer">
-                    <span className="dateHeading">
-                      Date: {formatDate(currentDate)}
-                    </span>
-                  </div>
-                  <div className="TimeContainer">
-                    <span className="timeHeading">
-                      Time: {formatTime(currentDate)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="qrContainer">
-                  {gameId !== null && (
-                    <QRCode value={`${appUrl}/game-play/${gameId}`} />
-                  )}
-                </div>
-                <button
-                  className={`trainerSetupDetailsContainerCardBtn ${
-                    previewedGame.id === openedGame.id ? "hidden" : ""
-                  }`}
-                  onClick={() => handlePreviewGame(openedGame)}
-                >
-                  Preview Game
-                </button>
-                <button
-                  className={`trainerSetupDetailsContainerCardBtn ${ previewedGame.id === openedGame.id ? "" : "hidden"}`}
-                  onClick={() => launchGame(previewedGame.id)}
-                >
-                  Launch Game
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div
-        className={`previewGameRightContainer ${
-          previewedGame.id !== null ? "" : "hidden"
-        }`}
-      >
-        <div className="boardContainer">
-          <div className="boardContainerTop">
-            <h2 className="">BOARD & CONTROLS</h2>
-          </div>
-          <div className="boardCard">
-            <img src={previewImageSrc} alt="" className="boardImg" />
-          </div>
-          <button
-            className={`fullScreenBtn ${gameId === null ? "disabled" : ""}`}
-            onClick={handleFullScreenSpectateGame}
+    <>
+      {!isLoading ? (
+        <>
+          {" "}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "90vh",
+              width: "100%",
+              fontSize: "20px",
+            }}
           >
-            OPEN GAME
-          </button>
+            Loading..
+          </div>
+        </>
+      ) : (
+        <div className="gamesListContainer">
+          <div
+            className={`listAndDetailsContainer ${
+              previewedGame.id !== null ? "listAndDetailsContainerColumn" : ""
+            }`}
+          >
+            <div className="trainerSetupListContainer">
+              <div className="listTableTopDiv">
+                <h2 className="">LIST</h2>
+                <div className="searchAndFilterIcons">
+                  {/* Search and filter icons */}
+                </div>
+              </div>
+              <table>
+                <thead>
+                  <tr className="listTableHeader">
+                    <th>Sno</th>
+                    <th>Type</th>
+                    <th>Variation Name</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody className="listTableBody">
+                  {currentData?.map((game: GameOverview, index) => (
+                    <tr key={index}>
+                  <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
+                      <td>{game.gameType}</td>
+                      <td>{game.variationName}</td>
+                      <td className="viewColumn">
+                        <img
+                          style={{ cursor: "pointer" }}
+                          className="openEye"
+                          onClick={() => openGame(game)}
+                          src={openeye}
+                          alt="openeye"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className="paginationControls">
+            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+
+            </div>
+            <div className="trainerSetupDetailsContainer">
+              {openedGame.id === null ? (
+                <div className="">No opened Game</div>
+              ) : (
+                <>
+                  {previewedGame.id !== null ? (
+                    <>
+                      <div className="trainerSetupDetailsContainerCard">
+                        <div className="trainerListTableTopDiv">
+                          <h2 className="">DETAILS</h2>
+                        </div>
+                        <div className="trainerSetupDetailsContainerCardBody">
+                          <div className="trainerGameDetailsRow">
+                            <span className="trainerGameDetailFieldName">
+                              Variation ID
+                            </span>
+                            <span className="trainerGameDetailFieldValue">
+                              {openedGame.id}
+                            </span>
+                          </div>
+                          <div className="trainerGameDetailsRow">
+                            <span className="trainerGameDetailFieldName">
+                              Game Type
+                            </span>
+                            <span className="trainerGameDetailFieldValue">
+                              {openedGame.gameType}
+                            </span>
+                          </div>
+                          <div className="trainerGameDetailsRow">
+                            <span className="trainerGameDetailFieldName">
+                              Variation Name
+                            </span>
+                            <span className="trainerGameDetailFieldValue">
+                              {openedGame.variationName}
+                            </span>
+                          </div>
+                          <div className={`DateNTimeContainer`}>
+                            <div className="DateContainer">
+                              <span className="dateHeading">
+                                Date: {formatDate(currentDate)}
+                              </span>
+                            </div>
+                            <div className="TimeContainer">
+                              <span className="timeHeading">
+                                Time: {formatTime(currentDate)}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="qrContainer">
+                            {gameId !== null && (
+                              <QRCode value={`${appUrl}/game-play/${gameId}`} />
+                            )}
+                          </div>
+                          {/* <button
+                      className={`trainerSetupDetailsContainerCardBtn `}
+                      onClick={() => handlePreviewGame(openedGame)}
+                    >
+                      Preview Game
+                    </button> */}
+                          <button
+                            className={`trainerSetupDetailsContainerCardBtn`}
+                            onClick={() => launchGame(previewedGame.id)}
+                          >
+                            Launch Game
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          <div
+            className={`previewGameRightContainer ${
+              previewedGame.id !== null ? "" : "hidden"
+            }`}
+          >
+            <div className="boardContainer">
+              <div className="boardContainerTop">
+                <h2 className="">BOARD & CONTROLS</h2>
+              </div>
+              <div className="boardCard">
+                <img src={previewImageSrc} alt="" className="boardImg" />
+              </div>
+              {/* <button
+                className={`fullScreenBtn ${gameId === null ? "disabled" : ""}`}
+                onClick={handleFullScreenSpectateGame}
+              >
+                OPEN GAME
+              </button> */}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

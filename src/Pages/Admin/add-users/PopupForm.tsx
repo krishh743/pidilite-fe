@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const PopupForm = ({ onClose, onSubmit }) => {
+  const generateUniqueId = () => {
+    return Math.random().toString(36).substr(2, 9);
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
     password: '',
-    uniqueId: '',
-    type: '',
-    status: ''
+    uniqueId: generateUniqueId(),
+    type: '2',
+    status: '1'
   });
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      uniqueId: generateUniqueId(),
+      type: '2',
+      status: '1'
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,17 +33,6 @@ const PopupForm = ({ onClose, onSubmit }) => {
     onSubmit(formData);
     onClose();
   };
-
-  // const fillDummyData = () => {
-  //   setFormData({
-  //     name: 'John Doe',
-  //     phoneNumber: '1234567890',
-  //     password: 'password123',
-  //     uniqueId: 'unique-123',
-  //     type: '1',
-  //     status: '1'
-  //   });
-  // };
 
   return (
     <div className="popupForm">
@@ -48,19 +50,17 @@ const PopupForm = ({ onClose, onSubmit }) => {
           <input type="password" name="password" value={formData.password} onChange={handleChange} required />
 
           <label>Unique ID:</label>
-          <input type="text" name="uniqueId" value={formData.uniqueId} onChange={handleChange} required />
+          <input type="text" name="uniqueId" value={formData.uniqueId} onChange={handleChange} readOnly required />
 
           <label>Type:</label>
           <select name="type" value={formData.type} onChange={handleChange} required>
-            <option value="">Select Type</option>
             <option value="1">Type 1</option>
             <option value="2">Type 2</option>
           </select>
 
           <label>Status:</label>
-          <input type="number" name="status" value={formData.status} onChange={handleChange} required />
+          <input type="number" name="status" value={formData.status} onChange={handleChange} readOnly required />
 
-          {/* <button type="button" onClick={fillDummyData}>Fill Dummy Data</button> */}
           <button type="submit">Submit</button>
         </form>
       </div>
