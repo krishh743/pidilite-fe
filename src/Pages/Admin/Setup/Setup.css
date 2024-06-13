@@ -516,3 +516,34 @@
     border: 1px solid #DEDCDC;
     cursor: pointer;
 }
+
+
+/* CSS styles for buttons */
+.saveButton {
+    background-color: #4CAF50 !important; 
+    border: none; 
+    color: white; 
+    padding: 15px 32px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block;
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    border-radius: 10px;
+}
+
+/* Hover effects */
+.saveButton:hover {
+    background-color: #45a049 !important;
+}
+
+.saveButton.cancel {
+    background-color: #f44336 !important; 
+}
+
+.saveButton.cancel:hover {
+    background-color: #da190b !important;
+}
+

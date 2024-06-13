@@ -30,6 +30,7 @@ interface Player {
 }
 
 interface finishedPlayer {
+    [x: string]: ReactNode
     rank: number;
     id: number;
     name: string;
@@ -140,7 +141,7 @@ const Game = () => {
                     name: player.name,
                     color: player.colour,
                     score: player.score,
-                    // previousPosition: number;
+                    phoneNumber: player?.phoneNumber,
                     currentPosition: player.score,
                     status: player.status
                 }
@@ -652,7 +653,6 @@ const Game = () => {
             });
 
             const factoidImgName = data.factoid // this is passed in for loop'd end
-            console.log(factoidImgName, "factoidImgName")
             setTimeout(() => {
                 rollDice();
             }, 100)
@@ -730,7 +730,7 @@ const Game = () => {
                 }, 1000);
                 //
 
-            }, 3000); // 3 seconds delay
+            }, 5000); // 3 seconds delay
 
             if (data.currentPosition === 64) {
                 toast(`${data.message}`, {
@@ -1072,13 +1072,6 @@ const Game = () => {
 
     },[!!document.fullscreenElement])
 
-
-
-
-
-
-
-
     return (
 
 
@@ -1101,6 +1094,7 @@ const Game = () => {
                                     </div>
                                     <p>Rank: {player.rank}</p>
                                     <p>Name: {player.name}</p>
+                                    <p>Name: {player?.phoneNumber}</p>
                                     <p>Score: {handleExtraScore(player.score)}</p>
                                     <p>Moves: {player.numberOfMoves}</p>
                                     <p>Number of Devices: {player.numberOfDevices}</p>
@@ -1153,7 +1147,7 @@ const Game = () => {
                         <img src={siteBanner} alt="" />
                     </div>
                     <div className="trainerBackgroundContainer">
-                        <img src={trainerBackground} className='trainerBgrndImage'></img>
+                        <img src={trainerBackground} alt='' className='trainerBgrndImage'></img>
                         <div className="gameBoardContainer">
                             <div className="playerCard">
                                 <span className='playerHeader'>PLAYER</span>

@@ -83,7 +83,7 @@ const Login = () => {
       }
 
       <span className="">Admin number - 9309125102    </span>
-      <span>Trainer Number - 7249035102</span>
+      <span>Trainer Number - 7259035102</span>
       <div className="banner">
         <img src={banner} alt="" />
       </div>

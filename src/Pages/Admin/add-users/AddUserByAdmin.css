@@ -106,3 +106,53 @@
   border: none;
   cursor: pointer;
 }
+
+.Delete-user{
+  cursor: pointer;
+}
+
+/* dialog box css */
+.confirmDeleteDialog {
+  /* height: 400px; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmDeleteDialogContent {
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.dialogButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.deleteBtn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancelBtn {
+  background-color: grey;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}

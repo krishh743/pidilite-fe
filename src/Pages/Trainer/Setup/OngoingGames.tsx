@@ -127,6 +127,7 @@ return ()=>{clearInterval(timeIntervle)}
       const participants = leaderBoardData.players.flat().map((player) => ({
         id: player.id,
         name: player.name,
+        phoneNumber:player?.phoneNumber,
         numberOfMoves: player.numberOfMoves,
         score: player.score,
       }));
@@ -427,7 +428,7 @@ return ()=>{clearInterval(timeIntervle)}
           <div className="participantsAndRankings">
             <div className="participantsContainer">
               <div className="listTableTopDiv">
-                <h2 className="">PARTICIPANTxS</h2>
+                <h2 className="">PARTICIPANTS</h2>
               </div>
               <table>
                 <thead>
@@ -435,6 +436,7 @@ return ()=>{clearInterval(timeIntervle)}
                     <th>Sno</th>
                     {/* <th>Rank</th> */}
                     <th>NAME</th>
+                    <th>Phone Number</th>
                     <th>Score</th>
                     <th>Moves</th>
                   </tr>
@@ -445,7 +447,9 @@ return ()=>{clearInterval(timeIntervle)}
                       <td>{index + 1}</td>
                       {/* <td>{index + 1}</td> */}
                       <td>{participant.name}</td>
+                      <td>{participant?.phoneNumber}</td>
                       <td>{handleExtraScore(participant?.score)}</td>
+                      {/* <td>{participant?.score}</td> */}
                       <td>{participant?.numberOfMoves}</td>
                     </tr>
                   ))}
