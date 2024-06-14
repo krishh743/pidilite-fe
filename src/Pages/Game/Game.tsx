@@ -141,7 +141,7 @@ const Game = () => {
                     name: player.name,
                     color: player.colour,
                     score: player.score,
-                    phoneNumber: player?.phoneNumber,
+                    // phoneNumber: player?.phoneNumber,
                     currentPosition: player.score,
                     status: player.status
                 }
@@ -606,6 +606,7 @@ const Game = () => {
                 name: player.name,
                 color: player.colour,
                 numberOfMoves: player.numberOfMoves,
+                phoneNumber: player.phoneNumber,
                 score: player.score,
                 finishedTime: player.finishedTime,
                 numberOfDevices: player.numberOfDevices,
@@ -727,7 +728,7 @@ const Game = () => {
                 // make dice disappear after latest position gets updated
                 setTimeout(() => {
                     setIsDiceVisible(false);
-                }, 1000);
+                }, 2000);
                 //
 
             }, 5000); // 3 seconds delay
@@ -1094,7 +1095,7 @@ const Game = () => {
                                     </div>
                                     <p>Rank: {player.rank}</p>
                                     <p>Name: {player.name}</p>
-                                    <p>Name: {player?.phoneNumber}</p>
+                                    <p>Phone: {player?.phoneNumber}</p>
                                     <p>Score: {handleExtraScore(player.score)}</p>
                                     <p>Moves: {player.numberOfMoves}</p>
                                     <p>Number of Devices: {player.numberOfDevices}</p>

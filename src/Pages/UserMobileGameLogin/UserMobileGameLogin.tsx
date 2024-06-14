@@ -232,14 +232,14 @@ const UserMobileGameLogin = () => {
         // })
 
         socketConnection.on('nextPlayer', (data) => {
-            // setIsYourTurn(false)
+            setIsYourTurn(false)
             console.log('nextPlayer msg', data)
             if (data.self) {
 
                 setTimeout(() => {
                     setDiceValue(undefined)
                     setIsYourTurn(true)
-                }, 4000)
+                }, 5000)
 
             } else {
                 setIsYourTurn(false)
@@ -247,7 +247,7 @@ const UserMobileGameLogin = () => {
                 setTimeout(() => {
                     setIsDiceVisible(false)
                     setDiceValue(undefined)
-                }, 5000)
+                }, 6000)
             }
         })
 
@@ -346,7 +346,12 @@ const UserMobileGameLogin = () => {
         <div className='mobileScreen'>
             <Toaster
                 position="bottom-center"
-            />
+                // toastOptions={{
+                //     style: {
+                //         zIndex: 0,
+                //     },
+                // }}
+                />
             <div className="mobileLoginNav">
                 <img src={pidlite} alt="" className="pidlite" />
                 <div className="rkCircle">

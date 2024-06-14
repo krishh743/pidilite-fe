@@ -129,18 +129,19 @@ const Archives = () => {
                 console.log("lleaderBoardData", leaderBoardData)
                 let leaderboardArr = leaderBoardData.players.flat()
                 denseRank(leaderboardArr)
-                const participants = leaderboardArr.map(player => ({
-                    id: player.id,
-                    rank: player.rank,
-                    name: player.name,
-                    score: player.score,
-                    numberOfMoves: player.numberOfMoves
+                // const participants = leaderboardArr.map(player => ({
+                //     id: player.id,
+                //     rank: player.rank,
+                //     name: player.name,
+                //     score: player.score,
+                //     numberOfMoves: player.numberOfMoves
 
-                }));
-                setParticipantsList(participants)
+                // }));
+                // setParticipantsList(participants)
                 setStartedAt(leaderBoardData.startedAt);
 
                 const rankingsList = leaderBoardData.players.flat().map(player => ({
+                    rank: player.rank,
                     name: player.name,
                     phoneNumber:player?.phoneNumber,
                     score: player.score,
@@ -397,7 +398,7 @@ const Archives = () => {
                                 {rankingsList?.map((participant: any, index) => (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{index + 1}</td>
+                                        <td>{participant.rank}</td>
                                         <td>{participant.name}</td>
                                         <td>{participant.phoneNumber}</td>
                                         <td>{handleExtraScore(participant.score)}</td>
