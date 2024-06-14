@@ -619,7 +619,6 @@ const Game = () => {
             });
 
             const factoidImgName = data.factoid // this is passed in for loop'd end
-            console.log(factoidImgName, "factoidImgName")
             setTimeout(() => {
                 rollDice();
             }, 100)
@@ -1039,13 +1038,6 @@ const Game = () => {
 
     },[!!document.fullscreenElement])
 
-
-
-
-
-
-
-
     return (
 
 
@@ -1119,7 +1111,7 @@ const Game = () => {
                         <img src={siteBanner} alt="" />
                     </div>
                     <div className="trainerBackgroundContainer">
-                        <img src={trainerBackground} className='trainerBgrndImage'></img>
+                        <img src={trainerBackground} alt='' className='trainerBgrndImage'></img>
                         <div className="gameBoardContainer">
                             <div className="playerCard">
                                 <span className='playerHeader'>PLAYER</span>
