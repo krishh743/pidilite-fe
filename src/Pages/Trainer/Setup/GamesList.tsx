@@ -144,9 +144,9 @@ const GamesList = ({ redirectOngoing }) => {
   };
 
   const launchGame = async (gameId: number | null | string) => {
-    setIsLoading(true);
     //  setWindow('ongoing-games')
     redirectOngoing("ongoing-games");
+    setIsLoading(true);
     try {
       const launchResponse = await fetch(`${baseUri}/api/gameplay`, {
         method: "POST",
@@ -166,6 +166,9 @@ const GamesList = ({ redirectOngoing }) => {
     } catch (error) {
       alert(error);
       setIsLoading(false);
+    }
+    finally{
+      setIsLoading(false)
     }
   };
 
@@ -286,7 +289,11 @@ const GamesList = ({ redirectOngoing }) => {
                         <img
                           style={{ cursor: "pointer" }}
                           className="openEye"
-                          onClick={() => openGame(game)}
+                          onClick={() => {
+                            openGame(game);
+                            redirectOngoing(game.id);
+                          }}
+                          // onClick={() => openGame(game)}
                           src={openeye}
                           alt="openeye"
                         />

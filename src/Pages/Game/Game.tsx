@@ -785,12 +785,13 @@ const Game = () => {
     }
 
     const handleStartBtn = () => {
-        console.log('socketConnection', socketConnection)
+        console.log('socketConnection', 'socketConnection')
         socketConnection?.emit('start')
     }
 
     const handlePauseBtn = () => {
         socketConnection?.emit('pause')
+        console.log("line794")
     }
 
     const handleEndBtn = () => {
@@ -858,6 +859,7 @@ const Game = () => {
                 // console.log("one");
                 setPreviewedImage(imageSrc as string);
                 setOpenPopup(true);
+                handlePauseBtn()
                 console.log("Image ***** found in local storage");
             } else {
                 console.log('Image not found in local storage');
@@ -865,6 +867,7 @@ const Game = () => {
         } catch (error) {
             console.error('Error previewing factoid:', error);
             setOpenPopup(false);
+            handleStartBtn()
         } finally {
             setIsLoading(false); // Ensure loading is stopped in both success and error cases
         }
@@ -890,11 +893,12 @@ const Game = () => {
 
     const handleClosePopup = () => {
         setOpenPopup(false)
+        handleStartBtn()
     }
 
     const handleCloseLeaderboardPopup = () => {
         setOpenLeaderboardPopup(false)
-    }
+        navigate("/trainer-setup",{state:"archives"})    }
 
     // const memoizedValue: number[][] = useMemo(() => {
     //     const newArr: number[][] = [];
