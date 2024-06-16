@@ -1145,7 +1145,6 @@ const Game = () => {
 
 
         <div>
-            <button id={'bgMusicPlay'} style={{display: 'hidden'}} onClick={playAppBackgroundMusic}>Play</button>
             <div ref={gameRef}>
                 <div className='gameMain'>
                     <Popup open={openPopup} onClose={handleClosePopup} position="right center">
