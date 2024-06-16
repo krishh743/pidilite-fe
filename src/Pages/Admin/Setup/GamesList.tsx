@@ -605,7 +605,7 @@ const GamesList = ({setWindow, window}) => {
                                 <th>Variation Name</th>
                                 <th>Banner</th>
                                 <th>View</th>
-                                <th>Duplicate</th>
+                                {/* <th>Duplicate</th> */}
                             </tr>
                         </thead>
                         <tbody className='listTableBody'>
@@ -616,12 +616,12 @@ const GamesList = ({setWindow, window}) => {
                                     <td>{game.variationName}</td>
                                     <td>{game.mobileBanner}</td>
                                     <td className='viewColumn'><img className='openEye' onClick={() => openGame(game)} src={openeye} alt='openeye'></img></td>
-                                    <td><button className='duplicateBtn'>Duplicate</button></td>
+                                    {/* <td><button className='duplicateBtn'>Duplicate</button></td> */}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    <button className='addGameBtn' onClick={handleOpenNewGameForm}>Add Game</button>
+                    <button className='addGameBtn saveButton' onClick={handleOpenNewGameForm}>Add Game</button>
                 </div>
                 <div className="detailsContainer">
                     {openedGame.id === null ? (
@@ -784,7 +784,7 @@ const GamesList = ({setWindow, window}) => {
 
 
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 2 Pop up</span>
+                                        <span className="">Ladder 2 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -802,7 +802,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 5 Pop up</span>
+                                        <span className="">Ladder 5 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -820,7 +820,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 10 Pop up</span>
+                                        <span className="">Ladder 10 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -838,7 +838,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 13 Pop up</span>
+                                        <span className="">Snake 13 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -856,7 +856,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 17 Pop up</span>
+                                        <span className="">Ladder 17 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -874,7 +874,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 20 Pop up</span>
+                                        <span className="">Snake 20 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -892,7 +892,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 22 Pop up</span>
+                                        <span className="">Ladder 22 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -910,7 +910,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 26 Pop up</span>
+                                        <span className="">Snake 26 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -928,7 +928,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 30 Pop up</span>
+                                        <span className="">Snake 30 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -946,7 +946,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 32 Pop up</span>
+                                        <span className="">Ladder 32 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -964,7 +964,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 35 Pop up</span>
+                                        <span className="">Ladder 35 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -982,7 +982,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Ladder 37 Pop up</span>
+                                        <span className="">Ladder 37 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -1000,7 +1000,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 39 Pop up</span>
+                                        <span className="">Snake 39 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader
@@ -1018,7 +1018,7 @@ const GamesList = ({setWindow, window}) => {
                                         </div>
                                     </div>
                                     <div className="AdditionalDetailsRow">
-                                        <span className="">Snake 45 Pop up</span>
+                                        <span className="">Snake 45 Pop up <br />(790 px by 710 px)</span>
                                         <div className="SiteBannerContainerBtns">
                                             <button className="uploadBtn">
                                                 <ImageUploader

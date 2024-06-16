@@ -59,7 +59,7 @@ const PopupForm = ({ onClose, onSubmit }) => {
           </select>
 
           <label>Status:</label>
-          <input type="number" name="status" value={formData.status} onChange={handleChange} readOnly required />
+          {/* <input type="number" name="status" value={formData.status} onChange={handleChange} readOnly required /> */}
 
           <button type="submit">Submit</button>
         </form>

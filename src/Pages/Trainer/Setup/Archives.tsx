@@ -15,7 +15,7 @@ interface gameOverview {
 }
 
 const Archives = () => {
-    const location = useLocation();
+  const location = useLocation();
   //   const navigate = useNavigate();
 
   const baseUri = process.env.REACT_APP_BASE_URL;
@@ -48,30 +48,32 @@ const Archives = () => {
   //   const [gameId, setGameId] = React.useState<number | null | string>(null);
   //   const [isLoading, setIsLoading] = React.useState(false);
   const [previewImageSrc, setPreviewImageSrc] = React.useState("");
+  // const [gameValue, setGameValue] = React.useState();
   const [startedAt, setStartedAt] = React.useState(null);
   // Pagination state
   const [currentPage, setCurrentPage] = React.useState(1);
-  const rowsPerPage = 5;
+  const rowsPerPage = 10;
 
   // Pagination logic
-  const totalPages = Math.ceil(gameListData.length / rowsPerPage);
-  const currentData = gameListData.slice(
+
+  const reversedArchivesListData = [...gameListData].reverse();
+
+  // Pagination logic
+  const totalPages = Math.ceil(reversedArchivesListData.length / rowsPerPage);
+  const currentData = reversedArchivesListData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
+
   console.log(currentData, "currentData");
+
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
-
-
-console.log(location,"locationline69")
-
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
-
   const fetchGamesList = async () => {
     try {
       const archivedGamesResponse = await fetch(
@@ -123,7 +125,15 @@ console.log(location,"locationline69")
     }
   }
 
+  useEffect(() => {
+    if (gameListData.length > 0) {
+      openGame(gameListData[gameListData.length - 1]);
+    }
+  }, [gameListData]);
+
   const openGame = (game: gameOverview) => {
+    handlePreviewGame(game);
+    // setGameValue(game)
     if (previewedGame.id !== null) {
       setPreviewedGame({
         id: null,
@@ -154,15 +164,7 @@ console.log(location,"locationline69")
         console.log("lleaderBoardData", leaderBoardData);
         let leaderboardArr = leaderBoardData.players.flat();
         denseRank(leaderboardArr);
-        // const participants = leaderboardArr.map(player => ({
-        //     id: player.id,
-        //     rank: player.rank,
-        //     name: player.name,
-        //     score: player.score,
-        //     numberOfMoves: player.numberOfMoves
 
-        // }));
-        // setParticipantsList(participants)
         setStartedAt(leaderBoardData.startedAt);
 
         const rankingsList = leaderBoardData.players.flat().map((player) => ({
@@ -184,37 +186,6 @@ console.log(location,"locationline69")
 
     fetchLeaderBoardData();
 
-    const fetchBgrndImage = async () => {
-      // try {
-      //     const bgResponse = await fetch(`${baseUri}/api/gameplay/${game.id}`, {
-      //         method: 'GET',
-      //         headers: {
-      //             'Content-Type': 'application/json',
-      //             'Authorization': `${localStorage.getItem('token')}`
-      //         },
-      //     })
-      //     const leaderBoardData = await leaderBoardResponse.json()
-      //     console.log("lleaderBoardData", leaderBoardData)
-      //     const participants = leaderBoardData.players.flat().map(player => ({
-      //         id: player.id,
-      //         name: player.name,
-      //     }));
-      //     setParticipantsList(participants)
-      //     const rankingsList = leaderBoardData.players.flat().map(player => ({
-      //         name: player.name,
-      //         score: player.score,
-      //         finishedTime: new Date(player.finishedTime).toLocaleString()
-      //     }));
-      //     setRankingsList(rankingsList)
-      //     console.log(rankingsList);
-      //     return leaderBoardData
-      // } catch (error) {
-      //     console.log("error", error)
-      //     return []
-      // }
-    };
-
-    // setGameListData(gamesListResdata)
     setOpenedGame({
       id: game.id,
       variationId: game.variationId,
@@ -338,69 +309,76 @@ console.log(location,"locationline69")
           </div>
         </div>
         <div className="trainerSetupDetailsContainer">
-          {openedGame.id === null ? (
+          {openedGame?.id === null ? (
             <div className="">No opened Game</div>
           ) : (
-            <div className="trainerSetupDetailsContainerCard">
-              <div className="trainerListTableTopDiv">
-                <h2 className="">DETAILS</h2>
-              </div>
-              <div className="trainerSetupDetailsContainerCardBody">
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation ID
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.id}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">Game Type</span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.gameType}
-                  </span>
-                </div>
-                <div className="trainerGameDetailsRow">
-                  <span className="trainerGameDetailFieldName">
-                    Variation Name
-                  </span>
-                  <span className="trainerGameDetailFieldValue">
-                    {openedGame.variationName}
-                  </span>
-                </div>
-                <div
-                  className={`DateNTimeContainer ${
-                    openedGame.id === previewedGame.id ? "" : "hidden"
-                  }`}
-                >
-                  {startedAt && (
-                    <div className="DateContainer">
-                      <span className="dateHeading">
-                        {" "}
-                        {formatDate(startedAt)}
-                      </span>
+            <>
+              {previewedGame.id !== null ? (
+                <>
+                  <div className="trainerSetupDetailsContainerCard">
+                    <div className="trainerListTableTopDiv">
+                      <h2 className="">DETAILS</h2>
                     </div>
-                  )}
-                  <div className="TimeContainer">
-                    <span className="timeHeading">Time: 13:24</span>
-                  </div>
-                </div>
+                    <div className="trainerSetupDetailsContainerCardBody">
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Variation ID
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame.id}
+                        </span>
+                      </div>
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Game Type
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame.gameType}
+                        </span>
+                      </div>
+                      <div className="trainerGameDetailsRow">
+                        <span className="trainerGameDetailFieldName">
+                          Variation Name
+                        </span>
+                        <span className="trainerGameDetailFieldValue">
+                          {openedGame.variationName}
+                        </span>
+                      </div>
+                      <div
+                        className={`DateNTimeContainer`}
+                      >
+                        {startedAt && (
+                          <div className="DateContainer">
+                            <span className="dateHeading">
+                              {" "}
+                              {formatDate(startedAt)}
+                            </span>
+                          </div>
+                        )}
+                        <div className="TimeContainer">
+                          <span className="timeHeading">Time: 13:24</span>
+                        </div>
+                      </div>
 
-                <div className="gameUrlFieldContainer">
-                  <span>URL: </span>
-                  <span>{openedGame.url}</span>
-                </div>
-                <button
-                  className={`trainerSetupDetailsContainerCardBtn ${
-                    previewedGame.id === openedGame.id ? "hidden" : ""
-                  }`}
-                  onClick={() => handlePreviewGame(openedGame)}
-                >
-                  Preview Game
-                </button>
-                {/* <button className='trainerSetupDetailsContainerCardBtn' onClick={() => launchGame(previewedGame.id)}>Launch Game</button> */}
-              </div>
-            </div>
+                      <div className="gameUrlFieldContainer">
+                        <span>URL: </span>
+                        <span>{openedGame.url}</span>
+                      </div>
+                      {/* <button
+                        className={`trainerSetupDetailsContainerCardBtn ${
+                          previewedGame.id === openedGame.id ? "hidden" : ""
+                        }`}
+                        onClick={() => handlePreviewGame(openedGame)}
+                      >
+                        Preview Game
+                      </button> */}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </div>
       </div>
@@ -419,33 +397,6 @@ console.log(location,"locationline69")
           </div>
         </div>
         <div className="participantsAndRankings">
-          {/* <div className="participantsContainer">
-                        <div className="listTableTopDiv">
-                            <h2 className="">PARTICIPANTxS</h2>
-                        </div>
-                        <table>
-                            <thead>
-                                <tr className='listTableHeader'>
-                                    <th>Sno</th>
-                                    <th>RANK</th>
-                                    <th>NAME</th>
-                                    <th>SCORE</th>
-                                    <th>MOVES</th>
-                                </tr>
-                            </thead>
-                            <tbody className='listTableBody'>
-                                {participantsList?.map((participant: any, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{participant.rank}</td>
-                                        <td>{participant.name}</td>
-                                        <td>{handleExtraScore(participant.score)}</td>
-                                        <td>{participant.numberOfMoves}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div> */}
           <div className="rankingsContainer">
             <div className="listTableTopDiv">
               <h2 className="">RANKINGS</h2>

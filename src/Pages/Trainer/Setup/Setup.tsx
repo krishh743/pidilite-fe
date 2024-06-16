@@ -45,15 +45,10 @@ function Setup() {
     const [openPopup, setOpenPopup] = React.useState(false);
 
     const [previewedImage, setPreviewedImage] = React.useState('');
-    const [selectedGameId, setSelectedGameId] = React.useState<number | null | string>(null);
+
+
     const [isLoading, setIsLoading] = React.useState(false)
     // const [test,setTest]=useState(false)
-
-    const redirectOngoing = (gameId: number | null | string) => {
-        setSelectedGameId(gameId);
-        // setWindow('ongoing-games');
-    };
-
 
     const handleClosePopup = () => {
         setOpenPopup(false)
@@ -117,23 +112,23 @@ function Setup() {
                         </div>
                         <div className="basicDetailsHeaderBtns">
                             {/* <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button> */}
-                            <button
+                            {/* <button
                                 className=""
                             // onClick={handleSave}
                             >SAVE</button>
                             <button
                                 className=""
                             // onClick={handleCancelGameDetailsUpdates}
-                            >CANCEL</button>
+                            >CANCEL</button> */}
                         </div>
                     </div>
 
                     <div className="previewGameMain">
                         {window === 'games-list' && (
-                            <GamesList  redirectOngoing={redirectOngoing} />
+                            <GamesList redirectOngoing={setWindow}/>
                         )}
                         {window === 'ongoing-games' && (
-                            <OngoingGames gameId={selectedGameId}/>
+                            <OngoingGames />
                         )}
                         {window === 'archives' && (
                             <Archives />

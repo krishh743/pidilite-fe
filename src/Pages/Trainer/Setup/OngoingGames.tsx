@@ -16,7 +16,7 @@ interface gameOverview {
   };
 }
 
-const OngoingGames = ({ gameId }) => {
+const OngoingGames = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const OngoingGames = ({ gameId }) => {
   const [gameListData, setGameListData] = useState([]);
   const [participantsList, setParticipantsList] = useState([]);
   const [rankingsList, setRankingsList] = useState([]);
-  // const [gameId, setGameId] = useState<number | null | string>(null);
+  const [gameId, setGameId] = useState<number | null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [previewImageSrc, setPreviewImageSrc] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -59,9 +59,6 @@ const OngoingGames = ({ gameId }) => {
   const [gameValue, setGameValue] = useState();
   const rowsPerPage = 5;
 
-
-console.log(gameId,"gameId")
-  
   const fetchGamesList = async () => {
     try {
       const ongoingGamesResponse = await fetch(
@@ -306,7 +303,6 @@ return ()=>{clearInterval(timeIntervle)}
                       style={{ cursor: "pointer" }}
                       className="openEye"
                       onClick={() => openGame(game)}
-                     
                       src={openeye}
                       alt="openeye"
                     ></img>
