@@ -36,7 +36,8 @@ const UserMobileGameLogin = () => {
     const [diceValue, setDiceValue] = useState<1 | 2 | 3 | 4 | 5 | 6 | undefined>(undefined)
     const [isYourTurn, setIsYourTurn] = useState(false)
 
-    const [isDiceVisible, setIsDiceVisible] = useState(false)
+    const [isDiceVisible, setIsDiceVisible] = useState(false);
+    const [isPaused, setIsPaused] = useState(false)
 
     const [diceTriggers, setDiceTriggers] = useState<string[]>([]);
 
@@ -171,6 +172,7 @@ const UserMobileGameLogin = () => {
 
 
     useEffect(() => {
+        console.log('socketConnection ------>', socketConnection)
         if (socketConnection === null) return;
         socketConnection.on('imageData', (data) => {
             console.log('imageData data', data)
@@ -218,6 +220,9 @@ const UserMobileGameLogin = () => {
 
         socketConnection.on('message', (data) => {
             console.log("msgdata", data)
+            if(data === "Game started."){
+                setIsPaused(false)
+            }
             toast(data)
         })
 
@@ -259,6 +264,12 @@ const UserMobileGameLogin = () => {
 
         socketConnection.on('pause', (data) => {
             console.log('pause msg', data)
+            setIsPaused(true)
+        })
+
+        socketConnection.on('start', (data) => {
+            console.log('satrt pause msg', data)
+            setIsPaused(false)
         })
 
         socketConnection.on('diceRolled', (data) => {
@@ -395,7 +406,7 @@ const UserMobileGameLogin = () => {
                             </div>)
                         }
 
-                        <button className={`${isYourTurn ? 'enterBtn' : 'disabledBtn'}`} onClick={handleRollDice}>
+                        <button disabled={isPaused} className={`${isYourTurn && !isPaused ? 'enterBtn' : 'disabledBtn'}`} onClick={handleRollDice}>
                             {isYourTurn ? 'ROLL DICE' : 'NOT YOUR TURN'}
                         </button>
                         <div className="boardUserProfileSVGContainer">

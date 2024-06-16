@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import './Game.css'
 import logo from '../../Assets/Images/pidlite-logo.png'
 import ham from '../../Assets/Images/ham.png'
@@ -8,6 +8,7 @@ import closeIcon from '../../Assets/Images/close.png'
 
 import dong from '../../Assets/Audio/dong-sound.mp3'
 import applause from '../../Assets/Audio/applause.mp3'
+import appBackgroundMusic from '../../Assets/Audio/appBackgroundMusic.mp3'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import io, { Socket } from 'socket.io-client';
@@ -99,14 +100,37 @@ const Game = () => {
     const socketBaseUrl = process.env.REACT_APP_SOCKET_URL;
 
     const socket = io(`${socketBaseUrl}`, {
-        extraHeaders:{
-            'ngrok-skip-browser-warning':'true'
+        extraHeaders: {
+            'ngrok-skip-browser-warning': 'true'
         },
         query: {
             gameId: id,
             type: 'spectator'
         }
     });
+    let appBackgroundAudio = new Audio(appBackgroundMusic)
+    const [isBgAudioPlaying, setIsBgAudioPlaying] = useState(false);
+    let appBackgroundAudioRef = useRef(new Audio(appBackgroundMusic));
+    let dongAudioRef = useRef(new Audio(dong));
+    let applauseAudioRef = useRef(new Audio(applause))
+
+    const playAppBackgroundMusic = () => {
+        appBackgroundAudioRef.current.play()
+        appBackgroundAudioRef.current.loop = true
+
+    }
+
+    const pauseAppBackgroundMusic = () => {
+        appBackgroundAudioRef.current.pause()
+    }
+
+    const playGameAudio = (audio) => {
+        pauseAppBackgroundMusic()
+        audio.current.play()
+        audio.current.onended = () => {
+            playAppBackgroundMusic();
+        };
+    }
 
     function playAudio(src: any) {
         let audio = new Audio(src);
@@ -122,6 +146,33 @@ const Game = () => {
 
     useEffect(() => {
 
+
+    //     const audio = appBackgroundAudioRef.current;
+
+    // const playMusic = () => {
+    //   audio.play()
+    //     .then(() => {
+    //       setIsBgAudioPlaying(true);
+    //     })
+    //     .catch(error => {
+    //       console.error('Autoplay failed:', error);
+    //       // Handle autoplay failure (e.g., user interaction required)
+    //     });
+    // };
+
+    // playMusic();
+
+        // Clean up function to stop audio when component unmounts
+        return () => {
+            appBackgroundAudioRef.current.pause();
+            dongAudioRef.current.pause();
+            applauseAudioRef.current.pause();
+        };
+    }, []);
+
+
+
+    useEffect(() => {
         function onConnect() {
             console.log('connected')
             setSocketConnection(socket)
@@ -158,7 +209,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -179,7 +230,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -200,7 +251,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -221,7 +272,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -242,7 +293,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -263,7 +314,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -284,7 +335,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -305,7 +356,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -326,7 +377,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -347,7 +398,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -368,7 +419,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -389,7 +440,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -410,7 +461,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -431,7 +482,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -452,7 +503,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -473,7 +524,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -494,7 +545,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -515,7 +566,7 @@ const Game = () => {
                         method: 'GET',
                         headers: {
                             'Authorization': `${localStorage.getItem('token')}`,
-                            'ngrok-skip-browser-warning':'true'
+                            'ngrok-skip-browser-warning': 'true'
                         },
                     })
 
@@ -571,6 +622,10 @@ const Game = () => {
             console.log('pause msg', data)
         }
 
+        function onStartEvent(data) {
+            console.log('start pause msg', data)
+        }
+
         function onGameOverEvent(data) {
             console.log('gameOver data ---->', data)
 
@@ -578,23 +633,23 @@ const Game = () => {
                 let rank = 1;
                 let prevScore = null;
                 let prevMoves = null;
-            
+
                 for (let i = 0; i < data.length; i++) {
                     const entry = data[i];
                     const score = entry.score;
                     const moves = entry.numberOfMoves;
-            
+
                     if (score !== prevScore || moves !== prevMoves) {
                         // Assign new rank when either score or moves change
                         entry.rank = rank;
-                    }else{
+                    } else {
                         entry.rank = data[i - 1].rank
                     }
-                    
+
                     // Update previous score and moves
                     prevScore = score;
                     prevMoves = moves;
-                    
+
                     rank++;
                 }
             }
@@ -611,9 +666,9 @@ const Game = () => {
                 finishedTime: player.finishedTime,
                 numberOfDevices: player.numberOfDevices,
                 rank: player.rank
-                
+
             }));
-            
+
 
             console.log('data--->', data)
 
@@ -657,7 +712,7 @@ const Game = () => {
             setTimeout(() => {
                 rollDice();
             }, 100)
-        
+
 
             // Delay (factoid + positions updation, diceValue update) by 3 seconds
             setTimeout(async () => {
@@ -699,9 +754,11 @@ const Game = () => {
 
                 if (data.factoid !== null) { //if snake or ladder
                     if (direction < 0) { //snake
-                        playAudio(dong)
+                        // playAudio(dong)
+                        playGameAudio(dongAudioRef)
                     } else {
-                        playAudio(applause)
+                        // playAudio(applause)
+                        playGameAudio(applauseAudioRef)
                     }
                 }
 
@@ -758,6 +815,7 @@ const Game = () => {
         socket.on('nextPlayer', onNextPlayerEvent)
         socket.on('drumRoll', onDrumRollEvent)
         socket.on('pause', onPauseEvent)
+        socket.on('start', onStartEvent)
         socket.on('gameOver', onGameOverEvent)
         socket.on('newUser', onNewUserEvent)
         socket.on('diceRolled', onDiceRollEvent)
@@ -775,17 +833,20 @@ const Game = () => {
             socket.off('gameOver', onGameOverEvent)
             socket.off('newUser', onNewUserEvent)
             socket.off('diceRolled', onDiceRollEvent)
+            socket.on('start', onStartEvent)
+
         };
     }, [])
 
     const handleExitFullScreen = () => {
         console.log("handleExitFullScreen")
         // navigate("/trainer-setup")
-        navigate("/trainer-setup",{state:"ongoing-games"})
+        navigate("/trainer-setup", { state: "ongoing-games" })
     }
 
     const handleStartBtn = () => {
         console.log('socketConnection', 'socketConnection')
+        playAppBackgroundMusic()
         socketConnection?.emit('start')
     }
 
@@ -859,7 +920,8 @@ const Game = () => {
                 // console.log("one");
                 setPreviewedImage(imageSrc as string);
                 setOpenPopup(true);
-                handlePauseBtn()
+                let pauseBtn = document.getElementById("pauseBtn")
+                pauseBtn?.click()
                 console.log("Image ***** found in local storage");
             } else {
                 console.log('Image not found in local storage');
@@ -867,7 +929,6 @@ const Game = () => {
         } catch (error) {
             console.error('Error previewing factoid:', error);
             setOpenPopup(false);
-            handleStartBtn()
         } finally {
             setIsLoading(false); // Ensure loading is stopped in both success and error cases
         }
@@ -892,13 +953,14 @@ const Game = () => {
     // console.log('players-outside', players)
 
     const handleClosePopup = () => {
-        setOpenPopup(false)
         handleStartBtn()
+        setOpenPopup(false)
     }
 
     const handleCloseLeaderboardPopup = () => {
         setOpenLeaderboardPopup(false)
-        navigate("/trainer-setup",{state:"archives"})    }
+        navigate("/trainer-setup", { state: "archives" })
+    }
 
     // const memoizedValue: number[][] = useMemo(() => {
     //     const newArr: number[][] = [];
@@ -1007,12 +1069,12 @@ const Game = () => {
 
     const handleZoomIn = () => {
         setZoomLevel(prevZoom => prevZoom + 10); // Increase zoom level by 10%
-    
+
     };
 
     const handleZoomOut = () => {
         setZoomLevel(prevZoom => prevZoom - 10); // Decrease zoom level by 10%
-      
+
     };
 
     const updateZoom = () => {
@@ -1021,7 +1083,7 @@ const Game = () => {
     };
 
     console.log('document.fullscreenElement -->', document.fullscreenElement)
-    
+
     useEffect(() => {
         updateZoom();
     }, [zoomLevel])
@@ -1061,7 +1123,7 @@ const Game = () => {
 
     useEffect(() => {
 
-        if(!document.fullscreenElement){
+        if (!document.fullscreenElement) {
             const exitFullscreen = async () => {
                 if (document.fullscreenElement) {
                     try {
@@ -1075,12 +1137,15 @@ const Game = () => {
             exitFullscreen()
         }
 
-    },[!!document.fullscreenElement])
+    }, [!!document.fullscreenElement])
+
+
 
     return (
 
 
         <div>
+            <button id={'bgMusicPlay'} style={{display: 'hidden'}} onClick={playAppBackgroundMusic}>Play</button>
             <div ref={gameRef}>
                 <div className='gameMain'>
                     <Popup open={openPopup} onClose={handleClosePopup} position="right center">
@@ -1249,8 +1314,8 @@ const Game = () => {
                             <div className="gameBoardbuttons">
                                 <button className='exitBtn' onClick={handleExitFullScreen}>EXIT FULL SCREEN</button>
                                 <div className="rightBtns">
-                                    <button className='startBtn' onClick={handleStartBtn}>START</button>
-                                    <button className='pauseBtn' onClick={handlePauseBtn}>PAUSE</button>
+                                    <button id={'startBtn'} className='startBtn' onClick={handleStartBtn}>START</button>
+                                    <button id={'pauseBtn'} className='pauseBtn' onClick={handlePauseBtn}>PAUSE</button>
                                     <button className='endBtn' onClick={handleEndBtn}>END</button>
                                 </div>
                             </div>
@@ -1288,7 +1353,7 @@ const Game = () => {
             </div>
 
             {/* <div style={{position: 'absolute', top: 10, right: 10, zIndex: 99999999999}}> */}
-            <div style={{ position:'absolute', bottom: 10, right: 40, zIndex: 999999999999 }}>
+            <div style={{ position: 'absolute', bottom: 10, right: 40, zIndex: 999999999999 }}>
                 {/* <button id="fullscreen-button" >full screen</button> */}
                 <button style={{ width: '40px', height: '30px', backgroundColor: 'grey', borderRadius: '10%', marginRight: '10px', color: '#fff' }} onClick={handleZoomIn}>+</button>
                 {zoomLevel}%
