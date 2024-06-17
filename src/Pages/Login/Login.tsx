@@ -3,6 +3,10 @@ import './Login.css'
 import banner from '../../Assets/Images/login-banner.png'
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
+import irm from "../../Assets/Images/IRMLogo.png"
+import logo from "../../Assets/Images/pidlite-logo.png"
+
+
 
 const Login = () => {
 
@@ -82,13 +86,23 @@ const Login = () => {
         )
       }
 
+
+
       <span className="">Admin number - 9309125102    </span>
       <span>Trainer Number - 7259035102</span>
       <div className="banner">
         <img src={banner} alt="" />
       </div>
       <div className='loginCard'>
-        <span>trainer / admin login 7249035102</span>
+        <div>
+<h1>Login Admin/Trainer</h1>
+<div className="companyLogos">
+    <img src={irm} alt="" className="irm" />
+    <img src={logo} alt="" className="logo" />
+  </div>
+        {/* <span>trainer / admin login 7249035102</span> */}
+
+</div>
         <div className="inputDiv">
           <span className="phoneNumberInput">
             Phone Number

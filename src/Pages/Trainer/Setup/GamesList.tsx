@@ -218,9 +218,10 @@ const GamesList = ({ redirectOngoing }) => {
     };
     return date.toLocaleTimeString("en-US", options);
   };
+  const reversedArchivesListData = [...gameListData].reverse();
 
-  const totalPages = Math.ceil(gameListData.length / rowsPerPage);
-  const currentData = gameListData.slice(
+  const totalPages = Math.ceil(reversedArchivesListData.length / rowsPerPage);
+  const currentData = reversedArchivesListData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );

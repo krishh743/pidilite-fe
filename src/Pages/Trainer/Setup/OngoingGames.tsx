@@ -59,6 +59,7 @@ const OngoingGames = () => {
   const [gameValue, setGameValue] = useState();
   const rowsPerPage = 5;
 
+  
   const fetchGamesList = async () => {
     try {
       const ongoingGamesResponse = await fetch(
@@ -225,8 +226,9 @@ return ()=>{clearInterval(timeIntervle)}
   };
 
   // Pagination logic
-  const totalPages = Math.ceil(gameListData.length / rowsPerPage);
-  const currentData = gameListData.slice(
+  const reversedArchivesListData = [...gameListData].reverse();
+  const totalPages = Math.ceil(reversedArchivesListData.length / rowsPerPage);
+  const currentData = reversedArchivesListData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
