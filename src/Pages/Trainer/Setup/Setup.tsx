@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import logo from '../../../Assets/Images/pidlite-logo.png'
 import ham from '../../../Assets/Images/ham.png'
-import irm from '../../../Assets/Images/IRMLogo.png'
+import irm from '../../../Assets/Images/DTXLogo.png'
 import openeye from '../../../Assets/Images/openeye.png'
 import { redirect, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -96,10 +96,10 @@ function Setup() {
             </div>
             <div className="setupPageContent">
                 <div className="setupSideBar">
-                    <a href="/training-games" className="setupSideBarItem">Training Games</a>
+                    {/* <a href="/training-games" className="setupSideBarItem">Training Games</a> */}
                     {/* <a href="/setup" className="setupSideBarItem">Setup</a> */}
                     <a href="/gameplay" className={`setupSideBarItem ${location.pathname === '/trainer-setup' ? 'activeSidebarLink' : ''}`}>Game Play</a>
-                    <a href="/leaderboard" className="setupSideBarItem">Players & Leaderboard</a>
+                    {/* <a href="/leaderboard" className="setupSideBarItem">Players & Leaderboard</a> */}
                 </div>
                 <div className="trainerSetupMain">
                     <h3 className="trainingGamesHeader">Training Games &gt; Setup</h3>

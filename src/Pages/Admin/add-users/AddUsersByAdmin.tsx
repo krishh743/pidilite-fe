@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../../Assets/Images/pidlite-logo.png";
 import ham from "../../../Assets/Images/ham.png";
-import irm from "../../../Assets/Images/IRMLogo.png";
+import irm from "../../../Assets/Images/DTXLogo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./AddUserByAdmin.css";
 import PopupForm from "./PopupForm";
@@ -142,9 +142,9 @@ function AddUsersByAdmin() {
           >
             Add Users
           </a>
-          <a href="/training-games" className="setupSideBarItem">
+          {/* <a href="/training-games" className="setupSideBarItem">
             Training Games
-          </a>
+          </a> */}
           <a
             href="/admin-setup"
             className={`setupSideBarItem ${
@@ -153,12 +153,12 @@ function AddUsersByAdmin() {
           >
             Setup
           </a>
-          <a href="/gameplay" className="setupSideBarItem">
+          {/* <a href="/gameplay" className="setupSideBarItem">
             Game Play
           </a>
           <a href="/leaderboard" className="setupSideBarItem">
             Players & Leaderboard
-          </a>
+          </a> */}
         </div>
 
         <div className="admin-add-user">

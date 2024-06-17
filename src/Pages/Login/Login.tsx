@@ -3,7 +3,7 @@ import './Login.css'
 import banner from '../../Assets/Images/login-banner.png'
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
-import irm from "../../Assets/Images/IRMLogo.png"
+import irm from "../../Assets/Images/DTXLogo.png"
 import logo from "../../Assets/Images/pidlite-logo.png"
 
 
