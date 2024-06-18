@@ -784,7 +784,7 @@ const Game = () => {
 
                 // make dice disappear after latest position gets updated
                 setTimeout(() => {
-                    setIsDiceVisible(false);
+                    setIsDiceVisible(true);
                 }, 2000);
                 //
 
