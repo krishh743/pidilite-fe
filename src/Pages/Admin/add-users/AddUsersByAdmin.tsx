@@ -95,7 +95,9 @@ function AddUsersByAdmin() {
         throw new Error("Network response was not ok");
       }
 
-      setGameListData(gameListData.filter(user => user.id !== selectedUserId));
+      setGameListData(
+        gameListData.filter((user) => user.id !== selectedUserId)
+      );
       toast.error("User deleted successfully!");
       setShowConfirmDelete(false);
     } catch (error) {
@@ -151,17 +153,19 @@ function AddUsersByAdmin() {
               location.pathname === "/setup" ? "activeSidebarLink" : ""
             }`}
           >
+            Live Games
+          </a>
+          <a href="/gameplay" className="setupSideBarItem">
             Setup
           </a>
-          {/* <a href="/gameplay" className="setupSideBarItem">
-            Game Play
-          </a>
-          <a href="/leaderboard" className="setupSideBarItem">
+          {/* <a href="/leaderboard" className="setupSideBarItem">
             Players & Leaderboard
           </a> */}
         </div>
 
         <div className="admin-add-user">
+        <h3 className="trainingGamesHeader"> Add User</h3>
+
           <div className="listContainer">
             <table className="adminListTable">
               <thead>
@@ -220,6 +224,9 @@ function AddUsersByAdmin() {
               <ConfirmDeleteDialog
                 onClose={handleCloseConfirmDelete}
                 onDelete={handleDeleteUser}
+                Heading={"Are you sure want to delete ?"}
+                ActionBtnText={"Delete"}
+                cancelBtn={"Cancel"}
               />
             )}
           </div>

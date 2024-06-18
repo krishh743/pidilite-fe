@@ -9,6 +9,7 @@ import TrainerProtectedRoute from "./Pages/Protected/TrainerProtectedRoute";
 import TrainerSetup from "./Pages/Trainer/Setup/Setup";
 import UserMobileGameLogin from "./Pages/UserMobileGameLogin/UserMobileGameLogin";
 import AddUsersByAdmin from "./Pages/Admin/add-users/AddUsersByAdmin";
+import GamePlay from "./Pages/Admin/game-play/GamePlay";
 
 function App() {
   return (
@@ -29,6 +30,14 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <AddUsersByAdmin />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            path="/gameplay"
+            element={
+              <AdminProtectedRoute>
+                <GamePlay />
               </AdminProtectedRoute>
             }
           />

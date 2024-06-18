@@ -48,9 +48,10 @@ const OngoingGames = ({ setWindow, window }) => {
   const [participantsList, setParticipantsList] = React.useState([]);
   const [rankingsList, setRankingsList] = React.useState([]);
   const [gameId, setGameId] = React.useState<number | null | string>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  // const [isLoading, setIsLoading] = React.useState(false);
   const [previewImageSrc, setPreviewImageSrc] = React.useState("");
-
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const rowsPerPage = 10;
   const appUrl = process.env.REACT_APP_WEBSITE_URL;
 
   const fetchGamesList = async () => {
@@ -206,10 +207,28 @@ const OngoingGames = ({ setWindow, window }) => {
     navigate(`/game-spectate/${gameId}`);
   };
 
+  const reversedArchivesListData = [...gameListData].reverse();
+
+  const totalPages = Math.ceil(reversedArchivesListData.length / rowsPerPage);
+  const currentData = reversedArchivesListData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+  // console.log(currentData, "currentData");
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+
   return (
     <div className="adminGamesListContainer">
       <div className="adminGamesListSetupPanel">
-        <h3 className="trainingGamesHeader">Training Games &gt; Setup</h3>
+        <h3 className="trainingGamesHeader"> Live Games</h3>
 
         <div className="panelBtns">
           <div className="LiveAndArchiveBtns">
@@ -217,27 +236,27 @@ const OngoingGames = ({ setWindow, window }) => {
               className={`${window === "games-list" ? "openedWindow" : ""}`}
               onClick={() => handleChangeTab("games-list")}
             >
-              Games List
+              Variation List
             </button>
             <button
               className={`${window === "ongoing-games" ? "openedWindow" : ""}`}
               onClick={() => handleChangeTab("ongoing-games")}
             >
-              Ongoing Games
+            Ongoing
             </button>
             <button
               className={`${window === "archives" ? "openedWindow" : ""}`}
               onClick={() => handleChangeTab("archives")}
             >
-              Archives
+              Completed
             </button>
           </div>
-          <div className="basicDetailsHeaderBtns">
+          {/* <div className="basicDetailsHeaderBtns">
             <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button>
             <button className="">SAVE</button>
             <button className="">CANCEL</button>
             <button className="">ARCHIVE</button>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -286,6 +305,20 @@ const OngoingGames = ({ setWindow, window }) => {
                 ))}
               </tbody>
             </table>
+            <div className="paginationControls">
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </button>
+              </div>
           </div>
           <div className="trainerSetupDetailsContainer">
             {openedGame.id === null ? (

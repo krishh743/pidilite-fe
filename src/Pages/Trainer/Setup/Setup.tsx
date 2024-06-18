@@ -97,18 +97,18 @@ function Setup() {
             <div className="setupPageContent">
                 <div className="setupSideBar">
                     {/* <a href="/training-games" className="setupSideBarItem">Training Games</a> */}
+                    <a href="/gameplay" className={`setupSideBarItem ${location.pathname === '/trainer-setup' ? 'activeSidebarLink' : ''}`}>Live Games</a>
                     {/* <a href="/setup" className="setupSideBarItem">Setup</a> */}
-                    <a href="/gameplay" className={`setupSideBarItem ${location.pathname === '/trainer-setup' ? 'activeSidebarLink' : ''}`}>Game Play</a>
                     {/* <a href="/leaderboard" className="setupSideBarItem">Players & Leaderboard</a> */}
                 </div>
                 <div className="trainerSetupMain">
-                    <h3 className="trainingGamesHeader">Training Games &gt; Setup</h3>
+                    <h3 className="trainingGamesHeader"> Training Games &gt; Setup</h3>
 
                     <div className="panelBtns">
                         <div className="LiveAndArchiveBtns">
-                            <button className={`${window === 'games-list' ? 'openedWindow' : ''}`} onClick={() => setWindow('games-list')} style={{cursor:"pointer"}}>Games list</button>
-                            <button className={`${window === 'ongoing-games' ? 'openedWindow' : ''}`} onClick={() => setWindow('ongoing-games')} style={{cursor:"pointer"}}>Ongoing Games</button>
-                            <button className={`${window === 'archives' ? 'openedWindow' : ''}`} onClick={() => setWindow('archives')} style={{cursor:"pointer"}}>Archives</button>
+                            <button className={`${window === 'games-list' ? 'openedWindow' : ''}`} onClick={() => setWindow('games-list')} style={{cursor:"pointer"}}>Live Games</button>
+                            <button className={`${window === 'ongoing-games' ? 'openedWindow' : ''}`} onClick={() => setWindow('ongoing-games')} style={{cursor:"pointer"}}>Ongoing</button>
+                            <button className={`${window === 'archives' ? 'openedWindow' : ''}`} onClick={() => setWindow('archives')} style={{cursor:"pointer"}}>Completed</button>
                         </div>
                         <div className="basicDetailsHeaderBtns">
                             {/* <button className="basicDetailsHeaderPreviewBtn">PREVIEW</button> */}
